@@ -1,0 +1,15 @@
+# OS
+
+.DS_Store
+
+# IDE (VS Code)
+
+.vscode/
+
+# Byte-compiled / optimized / DLL files
+
+__pycache__/
+
+# Environments
+
+.venv
