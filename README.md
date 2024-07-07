@@ -92,3 +92,34 @@ pip install 'spacy[apple]==3.7.4'
 ## Licensing
 
 Find Agreement is available under the [MIT License](LICENSE).
+
+## Backlog
+
+### Themes
+
+| Theme     | Description                                                  |
+| --------- | ------------------------------------------------------------ |
+| CPD       | Explore tools for copy-paste detection.                      |
+| Display   | Enhance display.                                             |
+| Interface | Improve user interface.                                      |
+| Refactor  | Refactor code.                                               |
+| Span      | Expand from a single verse to passages within a chapter to chapters to passages across chapters. |
+
+### Backlog Items
+
+| Priority | Theme     | Backlog Item                                                 | Status | Score |
+| -------- | --------- | ------------------------------------------------------------ | ------ | ----- |
+|          | Refactor  | Fix [difflib](https://docs.python.org/3/library/difflib.html) use: “The last triple is a dummy, and has the value (len(a), len(b), 0).” | FIXED  |       |
+|          | Display   | Show count of words in common versus words, and [longest common substring](https://en.wikipedia.org/wiki/Longest_common_substring). |        |       |
+|          | Span      | Expand from a single verse to passages within a chapter.     |        |       |
+|          | CPD       | Does [spaCy](https://spacy.io) have capability to detect copy-paste? It can calculate a similarity score (cosine similarity by default) for [Doc](https://spacy.io/api/doc#similarity) and [Span](https://spacy.io/api/span#similarity). |        |       |
+|          | Display   | Permit color selection for agreement.                        |        |       |
+|          | Display   | Add a third column.                                          |        |       |
+|          | CPD       | [Similarity measures could be calculated in Python](https://medium.com/@heerambavi/simple-plagiarism-detection-using-nlp-1ee60c4f1d48), including [Jaccard index](https://en.wikipedia.org/wiki/Jaccard_index) and [longest common subsequence](https://en.wikipedia.org/wiki/Longest_common_subsequence). |        |       |
+|          | Interface | Make [runnable from command line](https://medium.com/@evaGachirwa/running-python-script-with-arguments-in-the-command-line-93dfa5f10eff). |        |       |
+|          | Interface | Add example to [JupyterLab](https://github.com/jupyterlab/jupyterlab-desktop/blob/master/cli.md). |        |       |
+|          | CPD       | [CPD](https://pmd.github.io/pmd/pmd_userdocs_cpd.html) [works with tokens](https://pmd.github.io/pmd/pmd_devdocs_major_adding_new_cpd_language.html) created by a [lexer](https://docs.pmd-code.org/apidocs/pmd-core/7.4.0-SNAPSHOT/net/sourceforge/pmd/cpd/CpdLexer.html#), and so may be able to work with [lemmata](https://docs.cltk.org/en/latest/cltk.core.html#cltk.core.data_types.Doc.lemmata) by [adding a new language](https://pmd.github.io/pmd/pmd_devdocs_major_adding_new_cpd_language.html), if they can be passed from Python to Java and back. |        |       |
+|          | Refactor  | Find linter [that works in VS Code](https://code.visualstudio.com/docs/python/linting) to check style against [PEP 8](https://peps.python.org/pep-0008/): e.g., [flake8](https://flake8.pycqa.org/en/latest/) (which includes [mccabe](https://pypi.org/project/mccabe/) and [pycodestyle](https://pypi.org/project/pycodestyle/)) or [pylint](https://www.pylint.org). Does [prospector](https://pypi.org/project/prospector/) work? |        |       |
+|          | Refactor  | What else belongs in [setup.py](https://github.com/navdeep-G/samplemod/blob/master/setup.py)? |        |       |
+|          | Refactor  | Add [type hints](https://docs.python.org/3/library/typing.html) and run [mypy](https://mypy-lang.org). |        |       |
+|          | Refactor  | Consider complexity tools beyond mccabe, e.g., [radon](https://pypi.org/project/radon/). |        |       |
