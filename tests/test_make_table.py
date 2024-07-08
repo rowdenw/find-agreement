@@ -38,13 +38,15 @@ class TestMakeTable(unittest.TestCase):
             left_text=config.grc_byz1904_ΚΑΤΑ_ΜΑΡΚΟΝ_13_21,
             right_text=config.grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_24_23,
         )
-        data = synopsis.getDataFrame()
+        data = synopsis.getData()
         left_highlighted = " καὶ[yellow] τότε ἐάν τις ὑμῖν εἴπῃ, ἰδοὺ ὧδε ὁ Χριστός[/yellow], ἰδοὺ ἐκεῖ[yellow], μὴ πιστεύετε[/yellow]."
         self.assertEqual(data.iat[0, 0], left_highlighted)
         self.assertEqual(data.iloc[0]["Mark 13:21"], left_highlighted)
         right_highlighted = "[yellow] τότε ἐάν τις ὑμῖν εἴπῃ, ἰδοὺ ὧδε ὁ Χριστὸς[/yellow] ἢ ὧδε[yellow], μὴ πιστεύσητε[/yellow]·"
         self.assertEqual(data.iat[0, 1], right_highlighted)
         self.assertEqual(data.iloc[0]["Matt. 24:23"], right_highlighted)
+        #TODO: summary = synopsis.getSummary()
+        #TODO: self.assertEqual(summary.iloc["count"]["Mark 13:21"], 14)
 
 
 if __name__ == "__main__":
