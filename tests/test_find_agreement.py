@@ -3,7 +3,7 @@ import unittest
 
 
 # Test whether difflib continues counterintuitive behavior.
-class TestFindAgreement(unittest.TestCase):
+class Testdifflib(unittest.TestCase):
     def test_Mark_Matt_agreement(self):
         mark = [
             "καί",
