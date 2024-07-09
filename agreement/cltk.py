@@ -13,6 +13,8 @@ def match_lemmata(left_text, right_text):
     left_POS = left_doc.pos
     left_tokens = left_doc.tokens
 
+    longest = 0
+
     right_count = 0
     right_doc = cltk_nlp.analyze(text=right_text)
     right_lemmata = right_doc.lemmata
@@ -24,6 +26,7 @@ def match_lemmata(left_text, right_text):
     prev = difflib.Match(0, 0, 0)
     matcher = difflib.SequenceMatcher(a=left_lemmata, b=right_lemmata)
     for match in matcher.get_matching_blocks():
+        contiguous = 0
         if prev.a + prev.size != match.a:
             for i in range(prev.a + prev.size, match.a):
                 if left_POS[i] == "PUNCT":
@@ -55,6 +58,7 @@ def match_lemmata(left_text, right_text):
                     left_result += left_tokens[i]
                 else:
                     common_count += 1
+                    contiguous += 1
                     left_count += 1
                     if  i == 0:
                         left_result += left_tokens[i]
@@ -72,5 +76,7 @@ def match_lemmata(left_text, right_text):
                     else:
                         right_result += " " + right_tokens[i]
             right_result += "[/yellow]"
+            if contiguous > longest:
+                longest = contiguous
             prev = match
-    return common_count, left_count, left_result, right_count, right_result
+    return common_count, longest, left_count, left_result, right_count, right_result

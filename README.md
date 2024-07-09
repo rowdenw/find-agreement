@@ -109,8 +109,6 @@ Find Agreement is available under the [MIT License](LICENSE).
 
 | Priority | Theme     | Backlog Item                                                 | Status | Score |
 | -------- | --------- | ------------------------------------------------------------ | ------ | ----- |
-|          | Refactor  | Fix [difflib](https://docs.python.org/3/library/difflib.html) use: “The last triple is a dummy, and has the value (len(a), len(b), 0).” | FIXED  |       |
-|          | Display   | Show count of words in common versus words, and [longest common substring](https://en.wikipedia.org/wiki/Longest_common_substring). |        |       |
 |          | Refactor  | Find linter [that works in VS Code](https://code.visualstudio.com/docs/python/linting) to check style against [PEP 8](https://peps.python.org/pep-0008/): e.g., [flake8](https://flake8.pycqa.org/en/latest/) (which includes [mccabe](https://pypi.org/project/mccabe/) and [pycodestyle](https://pypi.org/project/pycodestyle/)) or [pylint](https://www.pylint.org). Does [prospector](https://pypi.org/project/prospector/) work? |        |       |
 |          | Span      | Expand from a single verse to passages within a chapter.     |        |       |
 |          | CPD       | Does [spaCy](https://spacy.io) have capability to detect copy-paste? It can calculate a similarity score (cosine similarity by default) for [Doc](https://spacy.io/api/doc#similarity) and [Span](https://spacy.io/api/span#similarity). |        |       |
@@ -123,3 +121,5 @@ Find Agreement is available under the [MIT License](LICENSE).
 |          | Refactor  | What else belongs in [setup.py](https://github.com/navdeep-G/samplemod/blob/master/setup.py)? |        |       |
 |          | Refactor  | Add [type hints](https://docs.python.org/3/library/typing.html) and run [mypy](https://mypy-lang.org). |        |       |
 |          | Refactor  | Consider complexity tools beyond mccabe, e.g., [radon](https://pypi.org/project/radon/). |        |       |
+|          | Refactor  | Fix [difflib](https://docs.python.org/3/library/difflib.html) use: “The last triple is a dummy, and has the value (len(a), len(b), 0).” | FIXED  |       |
+|          | Display   | Show count of words in common versus words, and [longest common substring](https://en.wikipedia.org/wiki/Longest_common_substring). | DONE   |       |

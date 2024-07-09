@@ -57,6 +57,8 @@ class TestMakeTable(unittest.TestCase):
         data = synopsis.getData()
         self.assertEqual(data.loc[0, "common count"], 11)
         self.assertEqual(data.loc[1, "common count"], 11)
+        self.assertEqual(data.loc[0, "longest sequence"], 9)
+        self.assertEqual(data.loc[1, "longest sequence"], 9)
         self.assertEqual(data.loc[0, "word count"], 14)
         self.assertEqual(data.loc[1, "word count"], 13)
 
