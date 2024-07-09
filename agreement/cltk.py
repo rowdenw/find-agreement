@@ -33,7 +33,7 @@ def match_lemmata(left_text, right_text):
                     left_result += left_tokens[i]
                 else:
                     left_count += 1
-                    if  i == 0:
+                    if i == 0:
                         left_result += left_tokens[i]
                     else:
                         left_result += " " + left_tokens[i]
@@ -43,7 +43,7 @@ def match_lemmata(left_text, right_text):
                     right_result += right_tokens[i]
                 else:
                     right_count += 1
-                    if  i == 0:
+                    if i == 0:
                         right_result += right_tokens[i]
                     else:
                         right_result += " " + right_tokens[i]
@@ -60,7 +60,7 @@ def match_lemmata(left_text, right_text):
                     common_count += 1
                     contiguous += 1
                     left_count += 1
-                    if  i == 0:
+                    if i == 0:
                         left_result += left_tokens[i]
                     else:
                         left_result += " " + left_tokens[i]
@@ -71,7 +71,7 @@ def match_lemmata(left_text, right_text):
                     right_result += right_tokens[i]
                 else:
                     right_count += 1
-                    if  i == 0:
+                    if i == 0:
                         right_result += right_tokens[i]
                     else:
                         right_result += " " + right_tokens[i]
@@ -79,4 +79,5 @@ def match_lemmata(left_text, right_text):
             if contiguous > longest:
                 longest = contiguous
             prev = match
-    return common_count, longest, left_count, left_result, right_count, right_result
+    return (common_count, longest, left_count, left_result,
+            right_count, right_result)

@@ -10,7 +10,8 @@ def percent_encode(link):
 
 
 def get_verse(version, book, chapter, verse):
-    endpoint = "https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/${version}/books/${book}/chapters/${chapter}/verses/${verse}.json"
+    endpoint = "https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/${version}"
+    endpoint += "/books/${book}/chapters/${chapter}/verses/${verse}.json"
     endpoint = endpoint.replace("${version}", version)
     endpoint = endpoint.replace("${book}", book)
     endpoint = endpoint.replace("${chapter}", str(chapter))

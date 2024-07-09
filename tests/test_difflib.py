@@ -43,13 +43,16 @@ class Testdifflib(unittest.TestCase):
             "πιστεύω",
             "·",
         ]
-        # "If isjunk was provided, first the longest matching block is determined
-        # as above, but with the additional restriction that no junk element
-        # appears in the block. Then that block is extended as far as possible by
-        # matching (only) junk elements on both sides. So the resulting block never
-        # matches on junk except as identical junk happens to be adjacent to an
-        # interesting match." ~ https://docs.python.org/3/library/difflib.html
-        longest_match_adjacent_junk = ["τότε", "ἐάν", "τὶς", "ὑμεῖς", "εἶπον", ","]
+        # "If isjunk was provided, first the longest matching block is
+        # determined as above, but with the additional restriction that no
+        # junk element appears in the block. Then that block is extended as
+        # far as possible by matching (only) junk elements on both sides. So
+        # the resulting block never matches on junk except as identical junk
+        # happens to be adjacent to an interesting match."
+        # ~ https://docs.python.org/3/library/difflib.html
+        longest_match_adjacent_junk = [
+            "τότε", "ἐάν", "τὶς", "ὑμεῖς", "εἶπον", ","
+            ]
 
         matcher = difflib.SequenceMatcher(lambda x: x in ",.·", mark, matt)
         longest_match = matcher.find_longest_match()
@@ -57,11 +60,11 @@ class Testdifflib(unittest.TestCase):
         self.assertEqual(longest_match.b, 0)
         self.assertEqual(longest_match.size, 6)
         self.assertEqual(
-            mark[longest_match.a : longest_match.a + longest_match.size],
+            mark[longest_match.a: longest_match.a + longest_match.size],
             longest_match_adjacent_junk,
         )
         self.assertEqual(
-            matt[longest_match.b : longest_match.b + longest_match.size],
+            matt[longest_match.b: longest_match.b + longest_match.size],
             longest_match_adjacent_junk,
         )
 
@@ -84,11 +87,11 @@ class Testdifflib(unittest.TestCase):
         self.assertEqual(matches[0].b, 0)
         self.assertEqual(matches[0].size, 10)
         self.assertEqual(
-            mark[matches[0].a : matches[0].a + matches[0].size],
+            mark[matches[0].a: matches[0].a + matches[0].size],
             longest_match_including_junk,
         )
         self.assertEqual(
-            matt[matches[0].b : matches[0].b + matches[0].size],
+            matt[matches[0].b: matches[0].b + matches[0].size],
             longest_match_including_junk,
         )
 
@@ -96,11 +99,11 @@ class Testdifflib(unittest.TestCase):
         self.assertEqual(matches[1].b, 12)
         self.assertEqual(matches[1].size, 3)
         self.assertEqual(
-            mark[matches[1].a : matches[1].a + matches[1].size],
+            mark[matches[1].a: matches[1].a + matches[1].size],
             [",", "μή", "πιστεύω"],
         )
         self.assertEqual(
-            matt[matches[1].b : matches[1].b + matches[1].size],
+            matt[matches[1].b: matches[1].b + matches[1].size],
             [",", "μή", "πιστεύω"],
         )
 

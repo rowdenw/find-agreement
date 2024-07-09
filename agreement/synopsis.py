@@ -14,7 +14,6 @@ class Synopsis:
             self.table.add_column(kwargs["left_passage"])
         if kwargs.get("right_passage"):
             self.table.add_column(kwargs["right_passage"])
-        # TODO: Write tests to produce empty string if passage provided but no text.
         if kwargs.get("left_text") and kwargs.get("right_text"):
             self.data["passage"] = [
                 kwargs.get("left_passage"),
@@ -23,7 +22,8 @@ class Synopsis:
             left_text = kwargs["left_text"]
             right_text = kwargs["right_text"]
             self.data["raw text"] = [kwargs["left_text"], kwargs["right_text"]]
-            common_count, longest, left_count, left_data, right_count, right_data = (
+            (common_count, longest, left_count, left_data,
+             right_count, right_data) = (
                 match_lemmata(left_text, right_text)
             )
             self.data["common count"] = [common_count, common_count]
@@ -57,7 +57,8 @@ class Synopsis:
         Returns
         -------
         pandas.DataFrame
-            tabular data with one column per analysis result and one row per passage
+            tabular data with one column per analysis result and one row per
+            passage
 
         See Also
         --------
@@ -72,10 +73,12 @@ class Synopsis:
         Returns
         -------
         rich.table
-            table with one column per passage and rows of text and analysis, suitable for printing to console or SVG
+            table with one column per passage and rows of text and analysis,
+            suitable for printing to console or SVG
 
         See Also
         --------
-        Synopsis.getData : individual analysis results that are transposed for the table
+        Synopsis.getData : individual analysis results that are transposed for
+        the table
         """
         return self.table
