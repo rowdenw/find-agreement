@@ -46,9 +46,32 @@ class TestMakeTable(unittest.TestCase):
             data.loc[1, "raw text"], config.grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_24_23
         )
 
-        left_highlighted = " καὶ[yellow] τότε ἐάν τις ὑμῖν εἴπῃ, ἰδοὺ ὧδε ὁ Χριστός[/yellow], ἰδοὺ ἐκεῖ[yellow], μὴ πιστεύετε[/yellow]."
+    def test_two_statistics(self):
+        synopsis = Synopsis(
+            "291 False Christs and False Prophets",
+            left_passage="Mark 13:21",
+            right_passage="Matt. 24:23",
+            left_text=config.grc_byz1904_ΚΑΤΑ_ΜΑΡΚΟΝ_13_21,
+            right_text=config.grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_24_23,
+        )
+        data = synopsis.getData()
+        self.assertEqual(data.loc[0, "common count"], 11)
+        self.assertEqual(data.loc[1, "common count"], 11)
+        self.assertEqual(data.loc[0, "word count"], 14)
+        self.assertEqual(data.loc[1, "word count"], 13)
+
+    def test_two_highlighting(self):
+        synopsis = Synopsis(
+            "291 False Christs and False Prophets",
+            left_passage="Mark 13:21",
+            right_passage="Matt. 24:23",
+            left_text=config.grc_byz1904_ΚΑΤΑ_ΜΑΡΚΟΝ_13_21,
+            right_text=config.grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_24_23,
+        )
+        data = synopsis.getData()
+        left_highlighted = "καὶ[yellow] τότε ἐάν τις ὑμῖν εἴπῃ, ἰδοὺ ὧδε ὁ Χριστός[/yellow], ἰδοὺ ἐκεῖ[yellow], μὴ πιστεύετε[/yellow]."
         self.assertEqual(data.loc[0, "highlighted text"], left_highlighted)
-        right_highlighted = "[yellow] τότε ἐάν τις ὑμῖν εἴπῃ, ἰδοὺ ὧδε ὁ Χριστὸς[/yellow] ἢ ὧδε[yellow], μὴ πιστεύσητε[/yellow]·"
+        right_highlighted = "[yellow]τότε ἐάν τις ὑμῖν εἴπῃ, ἰδοὺ ὧδε ὁ Χριστὸς[/yellow] ἢ ὧδε[yellow], μὴ πιστεύσητε[/yellow]·"
         self.assertEqual(data.loc[1, "highlighted text"], right_highlighted)
 
 

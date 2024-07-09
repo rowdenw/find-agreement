@@ -1,4 +1,4 @@
-<svg class="rich-terminal" viewBox="0 0 1275 220.79999999999998" xmlns="http://www.w3.org/2000/svg">
+<svg class="rich-terminal" viewBox="0 0 1812 245.2" xmlns="http://www.w3.org/2000/svg">
     <!-- Generated with Rich https://www.textualize.io -->
     <style>
 
@@ -19,66 +19,70 @@
         font-weight: 700;
     }
 
-    .terminal-3172251165-matrix {
+    .terminal-1934555542-matrix {
         font-family: Fira Code, monospace;
         font-size: 20px;
         line-height: 24.4px;
         font-variant-east-asian: full-width;
     }
 
-    .terminal-3172251165-title {
+    .terminal-1934555542-title {
         font-size: 18px;
         font-weight: bold;
         font-family: arial;
     }
 
-    .terminal-3172251165-r1 { fill: #c5c8c6;font-style: italic; }
-.terminal-3172251165-r2 { fill: #c5c8c6 }
-.terminal-3172251165-r3 { fill: #c5c8c6;font-weight: bold }
-.terminal-3172251165-r4 { fill: #d0b344 }
+    .terminal-1934555542-r1 { fill: #c5c8c6;font-style: italic; }
+.terminal-1934555542-r2 { fill: #c5c8c6 }
+.terminal-1934555542-r3 { fill: #c5c8c6;font-weight: bold }
+.terminal-1934555542-r4 { fill: #d0b344 }
     </style>
 
     <defs>
-    <clipPath id="terminal-3172251165-clip-terminal">
-      <rect x="0" y="0" width="1255.6" height="169.79999999999998" />
+    <clipPath id="terminal-1934555542-clip-terminal">
+      <rect x="0" y="0" width="1792.3999999999999" height="194.2" />
     </clipPath>
-    <clipPath id="terminal-3172251165-line-0">
-    <rect x="0" y="1.5" width="1256.6" height="24.65"/>
+    <clipPath id="terminal-1934555542-line-0">
+    <rect x="0" y="1.5" width="1793.4" height="24.65"/>
             </clipPath>
-<clipPath id="terminal-3172251165-line-1">
-    <rect x="0" y="25.9" width="1256.6" height="24.65"/>
+<clipPath id="terminal-1934555542-line-1">
+    <rect x="0" y="25.9" width="1793.4" height="24.65"/>
             </clipPath>
-<clipPath id="terminal-3172251165-line-2">
-    <rect x="0" y="50.3" width="1256.6" height="24.65"/>
+<clipPath id="terminal-1934555542-line-2">
+    <rect x="0" y="50.3" width="1793.4" height="24.65"/>
             </clipPath>
-<clipPath id="terminal-3172251165-line-3">
-    <rect x="0" y="74.7" width="1256.6" height="24.65"/>
+<clipPath id="terminal-1934555542-line-3">
+    <rect x="0" y="74.7" width="1793.4" height="24.65"/>
             </clipPath>
-<clipPath id="terminal-3172251165-line-4">
-    <rect x="0" y="99.1" width="1256.6" height="24.65"/>
+<clipPath id="terminal-1934555542-line-4">
+    <rect x="0" y="99.1" width="1793.4" height="24.65"/>
             </clipPath>
-<clipPath id="terminal-3172251165-line-5">
-    <rect x="0" y="123.5" width="1256.6" height="24.65"/>
+<clipPath id="terminal-1934555542-line-5">
+    <rect x="0" y="123.5" width="1793.4" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-1934555542-line-6">
+    <rect x="0" y="147.9" width="1793.4" height="24.65"/>
             </clipPath>
     </defs>
 
-    <rect fill="#292929" stroke="rgba(255,255,255,0.35)" stroke-width="1" x="1" y="1" width="1273" height="218.8" rx="8"/><text class="terminal-3172251165-title" fill="#c5c8c6" text-anchor="middle" x="636" y="27">Rich</text>
+    <rect fill="#292929" stroke="rgba(255,255,255,0.35)" stroke-width="1" x="1" y="1" width="1810" height="243.2" rx="8"/><text class="terminal-1934555542-title" fill="#c5c8c6" text-anchor="middle" x="905" y="27">Rich</text>
             <g transform="translate(26,22)">
             <circle cx="0" cy="0" r="7" fill="#ff5f57"/>
             <circle cx="22" cy="0" r="7" fill="#febc2e"/>
             <circle cx="44" cy="0" r="7" fill="#28c840"/>
             </g>
         
-    <g transform="translate(9, 41)" clip-path="url(#terminal-3172251165-clip-terminal)">
+    <g transform="translate(9, 41)" clip-path="url(#terminal-1934555542-clip-terminal)">
     
-    <g class="terminal-3172251165-matrix">
-    <text class="terminal-3172251165-r1" x="0" y="20" textLength="1256.6" clip-path="url(#terminal-3172251165-line-0)">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;291&#160;False&#160;Christs&#160;and&#160;False&#160;Prophets&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-3172251165-r2" x="1256.6" y="20" textLength="12.2" clip-path="url(#terminal-3172251165-line-0)">
-</text><text class="terminal-3172251165-r2" x="0" y="44.4" textLength="1256.6" clip-path="url(#terminal-3172251165-line-1)">┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓</text><text class="terminal-3172251165-r2" x="1256.6" y="44.4" textLength="12.2" clip-path="url(#terminal-3172251165-line-1)">
-</text><text class="terminal-3172251165-r2" x="0" y="68.8" textLength="12.2" clip-path="url(#terminal-3172251165-line-2)">┃</text><text class="terminal-3172251165-r3" x="24.4" y="68.8" textLength="585.6" clip-path="url(#terminal-3172251165-line-2)">Mark&#160;13:21&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-3172251165-r2" x="622.2" y="68.8" textLength="12.2" clip-path="url(#terminal-3172251165-line-2)">┃</text><text class="terminal-3172251165-r3" x="646.6" y="68.8" textLength="585.6" clip-path="url(#terminal-3172251165-line-2)">Matt.&#160;24:23&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-3172251165-r2" x="1244.4" y="68.8" textLength="12.2" clip-path="url(#terminal-3172251165-line-2)">┃</text><text class="terminal-3172251165-r2" x="1256.6" y="68.8" textLength="12.2" clip-path="url(#terminal-3172251165-line-2)">
-</text><text class="terminal-3172251165-r2" x="0" y="93.2" textLength="1256.6" clip-path="url(#terminal-3172251165-line-3)">┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩</text><text class="terminal-3172251165-r2" x="1256.6" y="93.2" textLength="12.2" clip-path="url(#terminal-3172251165-line-3)">
-</text><text class="terminal-3172251165-r2" x="0" y="117.6" textLength="12.2" clip-path="url(#terminal-3172251165-line-4)">│</text><text class="terminal-3172251165-r2" x="24.4" y="117.6" textLength="48.8" clip-path="url(#terminal-3172251165-line-4)">&#160;καὶ</text><text class="terminal-3172251165-r4" x="73.2" y="117.6" textLength="524.6" clip-path="url(#terminal-3172251165-line-4)">&#160;τότε&#160;ἐάν&#160;τις&#160;ὑμῖν&#160;εἴπῃ,&#160;ἰδοὺ&#160;ὧδε&#160;ὁ&#160;Χριστός</text><text class="terminal-3172251165-r2" x="597.8" y="117.6" textLength="12.2" clip-path="url(#terminal-3172251165-line-4)">,</text><text class="terminal-3172251165-r2" x="622.2" y="117.6" textLength="12.2" clip-path="url(#terminal-3172251165-line-4)">│</text><text class="terminal-3172251165-r4" x="646.6" y="117.6" textLength="524.6" clip-path="url(#terminal-3172251165-line-4)">&#160;τότε&#160;ἐάν&#160;τις&#160;ὑμῖν&#160;εἴπῃ,&#160;ἰδοὺ&#160;ὧδε&#160;ὁ&#160;Χριστὸς</text><text class="terminal-3172251165-r2" x="1171.2" y="117.6" textLength="61" clip-path="url(#terminal-3172251165-line-4)">&#160;ἢ&#160;&#160;&#160;</text><text class="terminal-3172251165-r2" x="1244.4" y="117.6" textLength="12.2" clip-path="url(#terminal-3172251165-line-4)">│</text><text class="terminal-3172251165-r2" x="1256.6" y="117.6" textLength="12.2" clip-path="url(#terminal-3172251165-line-4)">
-</text><text class="terminal-3172251165-r2" x="0" y="142" textLength="12.2" clip-path="url(#terminal-3172251165-line-5)">│</text><text class="terminal-3172251165-r2" x="24.4" y="142" textLength="109.8" clip-path="url(#terminal-3172251165-line-5)">ἰδοὺ&#160;ἐκεῖ</text><text class="terminal-3172251165-r4" x="134.2" y="142" textLength="170.8" clip-path="url(#terminal-3172251165-line-5)">,&#160;μὴ&#160;πιστεύετε</text><text class="terminal-3172251165-r2" x="305" y="142" textLength="305" clip-path="url(#terminal-3172251165-line-5)">.&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-3172251165-r2" x="622.2" y="142" textLength="12.2" clip-path="url(#terminal-3172251165-line-5)">│</text><text class="terminal-3172251165-r2" x="646.6" y="142" textLength="36.6" clip-path="url(#terminal-3172251165-line-5)">ὧδε</text><text class="terminal-3172251165-r4" x="683.2" y="142" textLength="183" clip-path="url(#terminal-3172251165-line-5)">,&#160;μὴ&#160;πιστεύσητε</text><text class="terminal-3172251165-r2" x="866.2" y="142" textLength="366" clip-path="url(#terminal-3172251165-line-5)">·&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-3172251165-r2" x="1244.4" y="142" textLength="12.2" clip-path="url(#terminal-3172251165-line-5)">│</text><text class="terminal-3172251165-r2" x="1256.6" y="142" textLength="12.2" clip-path="url(#terminal-3172251165-line-5)">
-</text><text class="terminal-3172251165-r2" x="0" y="166.4" textLength="1256.6" clip-path="url(#terminal-3172251165-line-6)">└──────────────────────────────────────────────────┴──────────────────────────────────────────────────┘</text><text class="terminal-3172251165-r2" x="1256.6" y="166.4" textLength="12.2" clip-path="url(#terminal-3172251165-line-6)">
+    <g class="terminal-1934555542-matrix">
+    <text class="terminal-1934555542-r1" x="0" y="20" textLength="1744.6" clip-path="url(#terminal-1934555542-line-0)">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;291&#160;False&#160;Christs&#160;and&#160;False&#160;Prophets&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-1934555542-r2" x="1793.4" y="20" textLength="12.2" clip-path="url(#terminal-1934555542-line-0)">
+</text><text class="terminal-1934555542-r2" x="0" y="44.4" textLength="1744.6" clip-path="url(#terminal-1934555542-line-1)">┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓</text><text class="terminal-1934555542-r2" x="1793.4" y="44.4" textLength="12.2" clip-path="url(#terminal-1934555542-line-1)">
+</text><text class="terminal-1934555542-r2" x="0" y="68.8" textLength="12.2" clip-path="url(#terminal-1934555542-line-2)">┃</text><text class="terminal-1934555542-r3" x="24.4" y="68.8" textLength="878.4" clip-path="url(#terminal-1934555542-line-2)">Mark&#160;13:21&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-1934555542-r2" x="915" y="68.8" textLength="12.2" clip-path="url(#terminal-1934555542-line-2)">┃</text><text class="terminal-1934555542-r3" x="939.4" y="68.8" textLength="780.8" clip-path="url(#terminal-1934555542-line-2)">Matt.&#160;24:23&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-1934555542-r2" x="1732.4" y="68.8" textLength="12.2" clip-path="url(#terminal-1934555542-line-2)">┃</text><text class="terminal-1934555542-r2" x="1793.4" y="68.8" textLength="12.2" clip-path="url(#terminal-1934555542-line-2)">
+</text><text class="terminal-1934555542-r2" x="0" y="93.2" textLength="1744.6" clip-path="url(#terminal-1934555542-line-3)">┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩</text><text class="terminal-1934555542-r2" x="1793.4" y="93.2" textLength="12.2" clip-path="url(#terminal-1934555542-line-3)">
+</text><text class="terminal-1934555542-r2" x="0" y="117.6" textLength="12.2" clip-path="url(#terminal-1934555542-line-4)">│</text><text class="terminal-1934555542-r2" x="24.4" y="117.6" textLength="36.6" clip-path="url(#terminal-1934555542-line-4)">καὶ</text><text class="terminal-1934555542-r4" x="61" y="117.6" textLength="524.6" clip-path="url(#terminal-1934555542-line-4)">&#160;τότε&#160;ἐάν&#160;τις&#160;ὑμῖν&#160;εἴπῃ,&#160;ἰδοὺ&#160;ὧδε&#160;ὁ&#160;Χριστός</text><text class="terminal-1934555542-r2" x="585.6" y="117.6" textLength="134.2" clip-path="url(#terminal-1934555542-line-4)">,&#160;ἰδοὺ&#160;ἐκεῖ</text><text class="terminal-1934555542-r4" x="719.8" y="117.6" textLength="170.8" clip-path="url(#terminal-1934555542-line-4)">,&#160;μὴ&#160;πιστεύετε</text><text class="terminal-1934555542-r2" x="890.6" y="117.6" textLength="12.2" clip-path="url(#terminal-1934555542-line-4)">.</text><text class="terminal-1934555542-r2" x="915" y="117.6" textLength="12.2" clip-path="url(#terminal-1934555542-line-4)">│</text><text class="terminal-1934555542-r4" x="939.4" y="117.6" textLength="512.4" clip-path="url(#terminal-1934555542-line-4)">τότε&#160;ἐάν&#160;τις&#160;ὑμῖν&#160;εἴπῃ,&#160;ἰδοὺ&#160;ὧδε&#160;ὁ&#160;Χριστὸς</text><text class="terminal-1934555542-r2" x="1451.8" y="117.6" textLength="73.2" clip-path="url(#terminal-1934555542-line-4)">&#160;ἢ&#160;ὧδε</text><text class="terminal-1934555542-r4" x="1525" y="117.6" textLength="183" clip-path="url(#terminal-1934555542-line-4)">,&#160;μὴ&#160;πιστεύσητε</text><text class="terminal-1934555542-r2" x="1708" y="117.6" textLength="12.2" clip-path="url(#terminal-1934555542-line-4)">·</text><text class="terminal-1934555542-r2" x="1732.4" y="117.6" textLength="12.2" clip-path="url(#terminal-1934555542-line-4)">│</text><text class="terminal-1934555542-r2" x="1793.4" y="117.6" textLength="12.2" clip-path="url(#terminal-1934555542-line-4)">
+</text><text class="terminal-1934555542-r2" x="0" y="142" textLength="1744.6" clip-path="url(#terminal-1934555542-line-5)">├──────────────────────────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────┤</text><text class="terminal-1934555542-r2" x="1793.4" y="142" textLength="12.2" clip-path="url(#terminal-1934555542-line-5)">
+</text><text class="terminal-1934555542-r2" x="0" y="166.4" textLength="12.2" clip-path="url(#terminal-1934555542-line-6)">│</text><text class="terminal-1934555542-r3" x="24.4" y="166.4" textLength="878.4" clip-path="url(#terminal-1934555542-line-6)">11&#160;words&#160;in&#160;common&#160;out&#160;of&#160;14&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-1934555542-r2" x="915" y="166.4" textLength="12.2" clip-path="url(#terminal-1934555542-line-6)">│</text><text class="terminal-1934555542-r3" x="939.4" y="166.4" textLength="780.8" clip-path="url(#terminal-1934555542-line-6)">11&#160;words&#160;in&#160;common&#160;out&#160;of&#160;13&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-1934555542-r2" x="1732.4" y="166.4" textLength="12.2" clip-path="url(#terminal-1934555542-line-6)">│</text><text class="terminal-1934555542-r2" x="1793.4" y="166.4" textLength="12.2" clip-path="url(#terminal-1934555542-line-6)">
+</text><text class="terminal-1934555542-r2" x="0" y="190.8" textLength="1744.6" clip-path="url(#terminal-1934555542-line-7)">└──────────────────────────────────────────────────────────────────────────┴──────────────────────────────────────────────────────────────────┘</text><text class="terminal-1934555542-r2" x="1793.4" y="190.8" textLength="12.2" clip-path="url(#terminal-1934555542-line-7)">
 </text>
     </g>
     </g>

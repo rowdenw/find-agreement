@@ -8,7 +8,7 @@ class Synopsis:
     def __init__(self, title, **kwargs):
         self.data = pd.DataFrame()
 
-        self.table = Table()
+        self.table = Table(show_footer=True)
         self.table.title = title
         if kwargs.get("left_passage"):
             self.table.add_column(kwargs["left_passage"])
@@ -24,9 +24,15 @@ class Synopsis:
             right_text = kwargs["right_text"]
             self.data["raw text"] = [kwargs["left_text"], kwargs["right_text"]]
             # TODO: This could produce an error if there is text but no passage. Write test to raise error.
-            left_data, right_data = match_lemmata(left_text, right_text)
+            common_count, left_count, left_data, right_count, right_data = (
+                match_lemmata(left_text, right_text)
+            )
+            self.data["common count"] = [common_count, common_count]
             self.data["highlighted text"] = [left_data, right_data]
+            self.data["word count"] = [left_count, right_count]
             self.table.add_row(left_data, right_data)
+            self.table.columns[0].footer = str(common_count) + " words in common out of " + str(left_count)
+            self.table.columns[1].footer = str(common_count) + " words in common out of " + str(right_count)
         elif kwargs.get("left_text"):
             self.table.add_row(kwargs["left_text"])
         elif kwargs.get("right_text"):
