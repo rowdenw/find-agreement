@@ -29,24 +29,14 @@ def match_lemmata(left_text, right_text):
         contiguous = 0
         if prev.a + prev.size != match.a:
             for i in range(prev.a + prev.size, match.a):
-                if left_POS[i] == "PUNCT":
-                    left_result += left_tokens[i]
-                else:
-                    left_count += 1
-                    if i == 0:
-                        left_result += left_tokens[i]
-                    else:
-                        left_result += " " + left_tokens[i]
+                (increment, left_result) = process_token(
+                    left_POS[i], left_tokens[i], left_result, i)
+                left_count += increment
         if prev.b + prev.size != match.b:
             for i in range(prev.b + prev.size, match.b):
-                if right_POS[i] == "PUNCT":
-                    right_result += right_tokens[i]
-                else:
-                    right_count += 1
-                    if i == 0:
-                        right_result += right_tokens[i]
-                    else:
-                        right_result += " " + right_tokens[i]
+                (increment, right_result) = process_token(
+                    right_POS[i], right_tokens[i], right_result, i)
+                right_count += increment
         if (
             match.a < len(left_lemmata)
             or match.b < len(right_lemmata)
@@ -54,30 +44,33 @@ def match_lemmata(left_text, right_text):
         ):
             left_result += "[yellow]"
             for i in range(match.a, match.a + match.size):
-                if left_POS[i] == "PUNCT":
-                    left_result += left_tokens[i]
-                else:
-                    common_count += 1
-                    contiguous += 1
-                    left_count += 1
-                    if i == 0:
-                        left_result += left_tokens[i]
-                    else:
-                        left_result += " " + left_tokens[i]
+                (increment, left_result) = process_token(
+                    left_POS[i], left_tokens[i], left_result, i)
+                common_count += increment
+                contiguous += increment
+                left_count += increment
             left_result += "[/yellow]"
             right_result += "[yellow]"
             for i in range(match.b, match.b + match.size):
-                if right_POS[i] == "PUNCT":
-                    right_result += right_tokens[i]
-                else:
-                    right_count += 1
-                    if i == 0:
-                        right_result += right_tokens[i]
-                    else:
-                        right_result += " " + right_tokens[i]
+                (increment, right_result) = process_token(
+                    right_POS[i], right_tokens[i], right_result, i)
+                right_count += increment
             right_result += "[/yellow]"
             if contiguous > longest:
                 longest = contiguous
             prev = match
     return (common_count, longest, left_count, left_result,
             right_count, right_result)
+
+
+def process_token(part_of_speech, token, text, position):
+    increment = 0
+    if part_of_speech == "PUNCT":
+        text += token
+    else:
+        increment = 1
+        if position == 0:
+            text += token
+        else:
+            text += " " + token
+    return increment, text
