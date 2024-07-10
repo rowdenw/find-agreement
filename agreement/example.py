@@ -1,4 +1,4 @@
-from agreement.bible_api import get_verse
+from agreement.bible_api import get_chapter
 from rich.console import Console
 from agreement.synopsis import Synopsis
 
@@ -6,10 +6,10 @@ from agreement.synopsis import Synopsis
 def main():
     synopsis = Synopsis(
         "291 False Christs and False Prophets",
-        left_passage="Mark 13:21",
-        right_passage="Matt. 24:23",
-        left_text=get_verse("grc-byz1904", "καταμαρκον", 13, 21),
-        right_text=get_verse("grc-byz1904", "καταματθαιον", 24, 23),
+        left_passage="Mark 13:21-23",
+        right_passage="Matt. 24:23-25",
+        left_text=get_chapter("grc-byz1904", "καταμαρκον", 13, 21, 23),
+        right_text=get_chapter("grc-byz1904", "καταματθαιον", 24, 23, 25),
     )
     table = synopsis.table
     console = Console(record=True)
