@@ -14,7 +14,7 @@ def main():
     table = synopsis.table
     console = Console(record=True)
     console.print(table)
-    console.save_svg("example.svg")
+    console.save_svg("docs/_static/291-Mark+Matt.svg")
 
 
 if __name__ == "__main__":

@@ -50,7 +50,7 @@ However, there are different inflected forms: Χριστός versus Χριστ�
 
 Table output can then highlight these contiguous matching subsequences:
 
-![example](example.svg)
+![example](docs/_static/291-Mark+Matt.svg)
 
 ## Dependencies
 
