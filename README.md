@@ -110,10 +110,11 @@ Find Agreement is available under the [MIT License](LICENSE).
 
 | Priority | Theme     | Backlog Item                                                 | Status | Score |
 | -------- | --------- | ------------------------------------------------------------ | ------ | ----- |
-|          | Scholar   | Pick Greek version closest to critical edition.              |        |       |
+|          | Scholar   | Pick best critical edition.                                  | WIP    |       |
+|          | Display   | Permit color selection for agreement.                        |        |       |
 |          | Refactor  | Add messages to tests.                                       |        |       |
 |          | CPD       | Does [spaCy](https://spacy.io) have capability to detect copy-paste? It can calculate a similarity score (cosine similarity by default) for [Doc](https://spacy.io/api/doc#similarity) and [Span](https://spacy.io/api/span#similarity). |        |       |
-|          | Display   | Permit color selection for agreement.                        |        |       |
+|          | Scholar   | Switch to including [Society of Biblical Literature Greek New Testament](https://github.com/LogosBible/SBLGNT). |        |       |
 |          | Display   | Add a third column.                                          |        |       |
 |          | CPD       | [Similarity measures could be calculated in Python](https://medium.com/@heerambavi/simple-plagiarism-detection-using-nlp-1ee60c4f1d48), including [Jaccard index](https://en.wikipedia.org/wiki/Jaccard_index) and [longest common subsequence](https://en.wikipedia.org/wiki/Longest_common_subsequence). |        |       |
 |          | Interface | Make [runnable from command line](https://medium.com/@evaGachirwa/running-python-script-with-arguments-in-the-command-line-93dfa5f10eff). |        |       |

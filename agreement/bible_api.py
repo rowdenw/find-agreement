@@ -34,4 +34,13 @@ https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/${version}/books/${book}/chap
         data = json.load(url)
     df = pd.json_normalize(data["data"])
     text = df["text"]
-    return '\n'.join(text[start_verse - 1:end_verse])
+    return "\n".join(text[start_verse - 1: end_verse])
+
+
+def get_bibles():
+    endpoint = "\
+https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/bibles.json\
+"
+    with urllib.request.urlopen(percent_encode(endpoint)) as url:
+        df = pd.read_json(url)
+    return df
