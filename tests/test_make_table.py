@@ -28,7 +28,7 @@ class TestMakeTable(unittest.TestCase):
         self.assertEqual(table.title, "291 False Christs and False Prophets")
         self.assertEqual(table.columns[0].header, "Mark 13:21")
         self.assertEqual(table.columns[1].header, "Matt. 24:23")
-        self.assertEqual(table.row_count, 1)
+        self.assertEqual(table.row_count, 2)
 
     def test_two_data(self):
         synopsis = Synopsis(
@@ -56,10 +56,10 @@ class TestMakeTable(unittest.TestCase):
             right_text=config.grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_24_23,
         )
         data = synopsis.getData()
-        self.assertEqual(data.loc[0, "common count"], 11)
-        self.assertEqual(data.loc[1, "common count"], 11)
-        self.assertEqual(data.loc[0, "longest sequence"], 9)
-        self.assertEqual(data.loc[1, "longest sequence"], 9)
+        self.assertEqual(data.loc[0, "longest sequence"], 11)
+        self.assertEqual(data.loc[1, "longest sequence"], 11)
+        self.assertEqual(data.loc[0, "longest string"], 9)
+        self.assertEqual(data.loc[1, "longest string"], 9)
         self.assertEqual(data.loc[0, "word count"], 14)
         self.assertEqual(data.loc[1, "word count"], 13)
 

@@ -5,6 +5,24 @@ from agreement.cltk import match_lemmata
 
 
 class Synopsis:
+    """
+    A synopsis of passages and text.
+
+    Attributes
+    ----------
+    pandas.DataFrame
+        tabular data with one row per passage
+        and one column per analysis result:
+
+        longest sequence: longest common subsequence
+            https://en.wikipedia.org/wiki/Longest_common_subsequence
+        longest string: longest string of verbatim agreement
+            or common substring
+            https://en.wikipedia.org/wiki/Longest_common_substring
+    rich.table
+        table with one column per passage and rows of text and analysis,
+        suitable for printing to console or SVG
+    """
     def __init__(self, title, **kwargs):
         self.data = pd.DataFrame()
 
@@ -22,28 +40,23 @@ class Synopsis:
             left_text = kwargs["left_text"]
             right_text = kwargs["right_text"]
             self.data["raw text"] = [kwargs["left_text"], kwargs["right_text"]]
-            (common_count, longest, left_count, left_data,
+            (longest_sequence, longest_string, left_count, left_data,
              right_count, right_data) = (
                 match_lemmata(left_text, right_text)
             )
-            self.data["common count"] = [common_count, common_count]
+            self.data["longest sequence"] = [longest_sequence,
+                                             longest_sequence]
             self.data["highlighted text"] = [left_data, right_data]
-            self.data["longest sequence"] = [longest, longest]
+            self.data["longest string"] = [longest_string, longest_string]
             self.data["word count"] = [left_count, right_count]
             self.table.add_row(left_data, right_data)
+            self.table.add_row(str(left_count) + " words",
+                               str(right_count) + " words")
             self.table.columns[0].footer = (
-                str(common_count)
-                + " words in common out of "
-                + str(left_count)
-                + "\nlongest sequence: "
-                + str(longest)
-            )
-            self.table.columns[1].footer = (
-                str(common_count)
-                + " words in common out of "
-                + str(right_count)
-                + "\nlongest sequence: "
-                + str(longest)
+                "longest common subsequence: "
+                + str(longest_sequence) + " words"
+                + "\nlongest common substring: "
+                + str(longest_string) + " words"
             )
         elif kwargs.get("left_text"):
             self.table.add_row(kwargs["left_text"])
@@ -57,8 +70,8 @@ class Synopsis:
         Returns
         -------
         pandas.DataFrame
-            tabular data with one column per analysis result and one row per
-            passage
+            tabular data with one row per passage
+            and one column per analysis result
 
         See Also
         --------

@@ -5,7 +5,7 @@ import difflib
 def match_lemmata(left_text, right_text):
     cltk_nlp = NLP(language="grc", suppress_banner=True)
 
-    common_count = 0
+    longest_sequence = 0
 
     left_count = 0
     left_doc = cltk_nlp.analyze(text=left_text)
@@ -13,7 +13,7 @@ def match_lemmata(left_text, right_text):
     left_POS = left_doc.pos
     left_tokens = left_doc.tokens
 
-    longest = 0
+    longest_string = 0
 
     right_count = 0
     right_doc = cltk_nlp.analyze(text=right_text)
@@ -29,14 +29,16 @@ def match_lemmata(left_text, right_text):
         contiguous = 0
         if prev.a + prev.size != match.a:
             for i in range(prev.a + prev.size, match.a):
-                (increment, left_result) = process_token(
-                    left_POS[i], left_tokens[i], left_result, i)
+                (increment, new_text) = process_token(
+                    left_POS[i], left_tokens[i], i)
                 left_count += increment
+                left_result += new_text
         if prev.b + prev.size != match.b:
             for i in range(prev.b + prev.size, match.b):
-                (increment, right_result) = process_token(
-                    right_POS[i], right_tokens[i], right_result, i)
+                (increment, new_text) = process_token(
+                    right_POS[i], right_tokens[i], i)
                 right_count += increment
+                right_result += new_text
         if (
             match.a < len(left_lemmata)
             or match.b < len(right_lemmata)
@@ -44,33 +46,35 @@ def match_lemmata(left_text, right_text):
         ):
             left_result += "[yellow]"
             for i in range(match.a, match.a + match.size):
-                (increment, left_result) = process_token(
-                    left_POS[i], left_tokens[i], left_result, i)
-                common_count += increment
-                contiguous += increment
+                (increment, new_text) = process_token(
+                    left_POS[i], left_tokens[i], i)
                 left_count += increment
+                left_result += new_text
             left_result += "[/yellow]"
             right_result += "[yellow]"
             for i in range(match.b, match.b + match.size):
-                (increment, right_result) = process_token(
-                    right_POS[i], right_tokens[i], right_result, i)
+                (increment, new_text) = process_token(
+                    right_POS[i], right_tokens[i], i)
+                contiguous += increment
+                longest_sequence += increment
                 right_count += increment
+                right_result += new_text
             right_result += "[/yellow]"
-            if contiguous > longest:
-                longest = contiguous
+            if contiguous > longest_string:
+                longest_string = contiguous
             prev = match
-    return (common_count, longest, left_count, left_result,
+    return (longest_sequence, longest_string, left_count, left_result,
             right_count, right_result)
 
 
-def process_token(part_of_speech, token, text, position):
+def process_token(part_of_speech, token, position):
     increment = 0
-    if part_of_speech == "PUNCT":
-        text += token
+    if part_of_speech == "PUNCT" or token == "\n":
+        new_text = token
     else:
         increment = 1
         if position == 0:
-            text += token
+            new_text = token
         else:
-            text += " " + token
-    return increment, text
+            new_text = " " + token
+    return increment, new_text
