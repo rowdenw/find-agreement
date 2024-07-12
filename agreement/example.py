@@ -16,6 +16,18 @@ def main():
     console.print(table)
     console.save_svg("docs/_static/291-Mark+Matt.svg")
 
+    synopsis = Synopsis(
+        "14 John's Preaching of Repentance",
+        left_passage="Matt. 3:7-10",
+        right_passage="Luke 3:7-9",
+        left_text=get_chapter("grc-byz1904", "καταματθαιον", 3, 7, 10),
+        right_text=get_chapter("grc-byz1904", "καταλουκαν", 3, 7, 9),
+    )
+    table = synopsis.table
+    console = Console(record=True)
+    console.print(table)
+    console.save_html("docs/_static/014-Matt+Luke.html")
+
 
 if __name__ == "__main__":
     main()
