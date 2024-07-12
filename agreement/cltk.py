@@ -67,13 +67,13 @@ def match_lemmata(left_text, right_text):
             right_count, right_result)
 
 
-def process_token(part_of_speech, token, position):
-    increment = 0
+def process_token(part_of_speech, token, sentence_word):
     if part_of_speech == "PUNCT" or token == "\n":
+        increment = 0
         new_text = token
     else:
         increment = 1
-        if position == 0:
+        if sentence_word == 0:
             new_text = token
         else:
             new_text = " " + token
