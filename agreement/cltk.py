@@ -27,44 +27,55 @@ def match_lemmata(left_text, right_text):
     matcher = difflib.SequenceMatcher(a=left_lemmata, b=right_lemmata)
     for match in matcher.get_matching_blocks():
         contiguous = 0
-        if prev.a + prev.size != match.a:
-            for i in range(prev.a + prev.size, match.a):
-                (increment, new_text) = process_token(
-                    left_POS[i], left_tokens[i], i)
-                left_count += increment
-                left_result += new_text
-        if prev.b + prev.size != match.b:
-            for i in range(prev.b + prev.size, match.b):
-                (increment, new_text) = process_token(
-                    right_POS[i], right_tokens[i], i)
-                right_count += increment
-                right_result += new_text
-        if (
-            match.a < len(left_lemmata)
-            or match.b < len(right_lemmata)
-            or match.size > 0
-        ):
-            left_result += "[yellow]"
-            for i in range(match.a, match.a + match.size):
-                (increment, new_text) = process_token(
-                    left_POS[i], left_tokens[i], i)
-                left_count += increment
-                left_result += new_text
-            left_result += "[/yellow]"
-            right_result += "[yellow]"
-            for i in range(match.b, match.b + match.size):
-                (increment, new_text) = process_token(
-                    right_POS[i], right_tokens[i], i)
-                contiguous += increment
-                longest_sequence += increment
-                right_count += increment
-                right_result += new_text
-            right_result += "[/yellow]"
-            if contiguous > longest_string:
-                longest_string = contiguous
-            prev = match
-    return (longest_sequence, longest_string, left_count, left_result,
-            right_count, right_result)
+        (increment, new_text) = loop_match(
+            left_POS, left_tokens, prev.a + prev.size, match.a
+        )
+        left_count += increment
+        left_result += new_text
+        (increment, new_text) = loop_match(
+            right_POS, right_tokens, prev.b + prev.size, match.b
+        )
+        right_count += increment
+        right_result += new_text
+        if match.size == 0:
+            break
+        left_result += "[yellow]"
+        (increment, new_text) = loop_match(
+            left_POS, left_tokens, match.a, match.a + match.size
+        )
+        left_count += increment
+        left_result += new_text
+        left_result += "[/yellow]"
+        right_result += "[yellow]"
+        (increment, new_text) = loop_match(
+            right_POS, right_tokens, match.b, match.b + match.size
+        )
+        right_count += increment
+        right_result += new_text
+        right_result += "[/yellow]"
+        contiguous += increment
+        longest_sequence += increment
+        if contiguous > longest_string:
+            longest_string = contiguous
+        prev = match
+    return (
+        longest_sequence,
+        longest_string,
+        left_count,
+        left_result,
+        right_count,
+        right_result,
+    )
+
+
+def loop_match(POS, tokens, range_start, range_stop):
+    count = 0
+    result = ""
+    for i in range(range_start, range_stop):
+        (increment, new_text) = process_token(POS[i], tokens[i], i)
+        count += increment
+        result += new_text
+    return count, result
 
 
 def process_token(part_of_speech, token, sentence_word):
