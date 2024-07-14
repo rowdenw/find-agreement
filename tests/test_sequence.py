@@ -37,7 +37,7 @@ def test_match_sequences():
     sequence_a = get_sequence(doc_a)
     doc_b = greek.NLP.analyze(text=config.grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_3_7_9())
     sequence_b = get_sequence(doc_b)
-    (a_matches_b, b_matches_a) = match_sequences(doc_a, sequence_a,
+    (agreement, a_matches_b, b_matches_a) = match_sequences(doc_a, sequence_a,
                                                  doc_b, sequence_b)
     assert a_matches_b[0:23] == (
         [3]  # ὁ
