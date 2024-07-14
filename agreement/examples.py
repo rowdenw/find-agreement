@@ -28,6 +28,18 @@ def main():
     console.print(table)
     console.save_html("docs/_static/014-Matt+Luke.html")
 
+    synopsis = Synopsis(
+        "68 On Judging (Log and Speck)",
+        left_passage="Matt. 7:3-5",
+        right_passage="Luke 6:41-43",
+        left_text=get_chapter("grc-byz1904", "καταματθαιον", 7, 3, 5),
+        right_text=get_chapter("grc-byz1904", "καταλουκαν", 6, 41, 43),
+    )
+    table = synopsis.table
+    console = Console(record=True)
+    console.print(table)
+    console.save_html("docs/_static/068-Matt+Luke.html")
+
 
 if __name__ == "__main__":
     main()
