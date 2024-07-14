@@ -79,20 +79,24 @@ class Synopsis:
 def get_highlight(matches, pos, tokens):
     highlight = ""
     prev_match = False
+    start_of_line = True
     for i, token in enumerate(tokens):
         current_match = i in matches
         if current_match and not prev_match:
-            if i > 0 and pos[i] != "PUNCT":
+            if pos[i] != "PUNCT" and not start_of_line and not token == "\n":
                 highlight += " "
             highlight += "[yellow]" + token
-        elif not current_match and prev_match:
+        elif prev_match and not current_match:
             highlight += "[/yellow]"
-            if i > 0 and pos[i] != "PUNCT":
+            if pos[i] != "PUNCT" and not start_of_line and not token == "\n":
                 highlight += " "
             highlight += token
         else:
-            if i > 0 and pos[i] != "PUNCT":
+            if pos[i] != "PUNCT" and not start_of_line and not token == "\n":
                 highlight += " "
             highlight += token
         prev_match = current_match
+        start_of_line = (token == '\n')
+    if current_match:
+        highlight += "[/yellow]"
     return highlight
