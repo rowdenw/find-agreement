@@ -5,6 +5,23 @@ Matt_3_7_start = "ἰδὼν δὲ πολλοὺς τῶν Φαρισαίων κ
 ἐπὶ τὸ βάπτισμα αὐτοῦ εἶπεν αὐτοῖς· γεννήματα ἐχιδνῶν,"
 
 
+def test_column_color():
+    greek = Greek()
+
+    doc = greek.NLP.analyze(text=Matt_3_7_start)
+    a_matches_b = (
+        [3]  # ὁ
+        + [13]  # αὐτός
+        + list(range(15, 17))  # γέννημα ἔχιδνα
+    )
+    assert (
+        get_highlight(a_matches_b, doc.pos, doc.tokens, column="blue")
+        == "[blue]ἰδὼν δὲ πολλοὺς[/blue] [yellow]τῶν[/yellow] [blue]Φαρισαίων \
+καὶ Σαδδουκαίων ἐρχομένους ἐπὶ τὸ βάπτισμα αὐτοῦ εἶπεν[/blue] [yellow]αὐτοῖς\
+[/yellow][blue]·[/blue] [yellow]γεννήματα ἐχιδνῶν[/yellow][blue],[/blue]"
+    )
+
+
 def test_default_highlight():
     greek = Greek()
 

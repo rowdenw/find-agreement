@@ -26,15 +26,23 @@ class Synopsis:
     def __init__(self, title, **kwargs):
         self.table = Table(show_footer=True)
         self.table.title = title
-        if kwargs.get("agreement"):
-            highlight = kwargs["agreement"]
-        else:
-            highlight = "yellow"
         if kwargs.get("left_passage"):
             self.table.add_column(kwargs["left_passage"])
+            if kwargs.get("left_column"):
+                left_column = kwargs.get("left_column")
+            else:
+                left_column = ""
         if kwargs.get("right_passage"):
             self.table.add_column(kwargs["right_passage"])
+            if kwargs.get("right_column"):
+                right_column = kwargs.get("right_column")
+            else:
+                right_column = ""
         if kwargs.get("left_text") and kwargs.get("right_text"):
+            if kwargs.get("agreement"):
+                highlight = kwargs["agreement"]
+            else:
+                highlight = "yellow"
             greek = Greek()
             doc_a = greek.NLP.analyze(text=kwargs.get("left_text"))
             sequence_a = get_sequence(doc_a)
@@ -44,13 +52,19 @@ class Synopsis:
                 doc_a, sequence_a, doc_b, sequence_b
             )
             self.table.add_row(
-                get_highlight(a_matches_b, doc_a.pos, doc_a.tokens,
-                              agreement=highlight),
-                get_highlight(b_matches_a, doc_b.pos, doc_b.tokens,
-                              agreement=highlight),
+                get_highlight(
+                    a_matches_b, doc_a.pos, doc_a.tokens,
+                    agreement=highlight, column=left_column
+                ),
+                get_highlight(
+                    b_matches_a, doc_b.pos, doc_b.tokens,
+                    agreement=highlight, column=right_column
+                ),
             )
-            self.table.add_row(str(len(sequence_a)) + " words",
-                               str(len(sequence_b)) + " words")
+            self.table.add_row(
+                str(len(sequence_a)) + " words",
+                str(len(sequence_b)) + " words"
+            )
             self.table.columns[0].footer = (
                 "longest common subsequence: "
                 + str(sum(list(agreement.keys())))
@@ -82,33 +96,46 @@ class Synopsis:
         return self.table
 
 
-def get_highlight(matches, pos, tokens, **kwargs):
-    if kwargs.get("agreement"):
-        highlight = kwargs["agreement"]
+def get_highlight(matches, pos, tokens, agreement="yellow", column=""):
+    if len(column) > 0:
+        column_start = "[" + column + "]"
+        column_stop = "[/" + column + "]"
     else:
-        highlight = "yellow"
+        column_start = ""
+        column_stop = ""
     prev_match = False
-    span_start = "[" + highlight + "]"
-    span_stop = "[/" + highlight + "]"
+    span_start = "[" + agreement + "]"
+    span_stop = "[/" + agreement + "]"
     start_of_line = True
     text = ""
     for i, token in enumerate(tokens):
         current_match = i in matches
         if current_match and not prev_match:
-            if pos[i] != "PUNCT" and not start_of_line and not token == "\n":
-                text += " "
-            text += span_start + token
-        elif prev_match and not current_match:
+            if i > 0:
+                text += column_stop
+            text += get_spacing(pos[i],
+                                start_of_line, token) + span_start + token
+        elif not current_match and prev_match:
             text += span_stop
-            if pos[i] != "PUNCT" and not start_of_line and not token == "\n":
-                text += " "
-            text += token
+            text += get_spacing(pos[i],
+                                start_of_line, token) + column_start + token
         else:
-            if pos[i] != "PUNCT" and not start_of_line and not token == "\n":
-                text += " "
+            if i == 0:
+                text = column_start
+            else:
+                text += get_spacing(pos[i], start_of_line, token)
             text += token
         prev_match = current_match
-        start_of_line = (token == '\n')
+        start_of_line = token == "\n"
     if current_match:
         text += span_stop
+    else:
+        text += column_stop
     return text
+
+
+def get_spacing(pos, start_of_line, token):
+    if pos != "PUNCT" and not start_of_line and not token == "\n":
+        return " "
+    else:
+        return ""

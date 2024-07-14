@@ -22,7 +22,9 @@ def main():
         right_passage="Luke 3:7-9",
         left_text=get_chapter("grc-byz1904", "καταματθαιον", 3, 7, 10),
         right_text=get_chapter("grc-byz1904", "καταλουκαν", 3, 7, 9),
-        agreement="green"
+        agreement="green",
+        left_column="blue",
+        right_column="yellow"
     )
     table = synopsis.table
     console = Console(record=True)
