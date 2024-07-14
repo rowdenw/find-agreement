@@ -13,6 +13,7 @@ def test_calculate_agreement():
     (agreement,
      a_matches_b, b_matches_a) = match_sequences(doc_a, sequence_a,
                                                  doc_b, sequence_b)
+    assert max(agreement.keys()) == 45
     assert agreement[1] == 1
     assert agreement[19] == 1
     assert agreement[45] == 1

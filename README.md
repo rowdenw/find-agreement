@@ -56,7 +56,8 @@ Table output can then highlight these contiguous matching subsequences:
 
 This prototype uses the following libraries:
 
-* [Pandas](https://pandas.pydata.org) to test data apart from display, and
+* [Pandas](https://pandas.pydata.org) to normalize JSON data from Bible API;
+* [pytest](https://docs.pytest.org/en/8.2.x/) to simplify testing; and
 * [Rich](https://github.com/Textualize/rich) to create the rich text (with color and style) in tables for synopses (see for example [John's Imprisonment](http://www.hypotyposeis.org/synoptic-problem/2004/10/johns-imprisonment.html) created by Stephen C. Carlson).
 
 It also uses several libraries for analysis:
@@ -72,10 +73,11 @@ A detailed list is in [requirements](requirements.txt) and may be installed into
 pip install -r requirements.txt
 ```
 
-Or they may be installed individually:
+Or they may be installed individually into a virtual environment:
 
 ```python
 pip install pandas
+pip install -U pytest
 pip install rich
 pip install cltk
 pip install grc_odycy_joint_sm@https://huggingface.co/chcaa/grc_odycy_joint_sm/resolve/main/grc_odycy_joint_sm-any-py3-none-any.whl

@@ -1,7 +1,6 @@
 from rich.table import Table
-import pandas as pd
 
-from agreement.cltk import match_lemmata
+from agreement.cltk import Greek, get_sequence, match_sequences
 
 
 class Synopsis:
@@ -23,9 +22,8 @@ class Synopsis:
         table with one column per passage and rows of text and analysis,
         suitable for printing to console or SVG
     """
-    def __init__(self, title, **kwargs):
-        self.data = pd.DataFrame()
 
+    def __init__(self, title, **kwargs):
         self.table = Table(show_footer=True)
         self.table.title = title
         if kwargs.get("left_passage"):
@@ -33,51 +31,32 @@ class Synopsis:
         if kwargs.get("right_passage"):
             self.table.add_column(kwargs["right_passage"])
         if kwargs.get("left_text") and kwargs.get("right_text"):
-            self.data["passage"] = [
-                kwargs.get("left_passage"),
-                kwargs.get("right_passage"),
-            ]
-            left_text = kwargs["left_text"]
-            right_text = kwargs["right_text"]
-            self.data["raw text"] = [kwargs["left_text"], kwargs["right_text"]]
-            (longest_sequence, longest_string, left_count, left_data,
-             right_count, right_data) = (
-                match_lemmata(left_text, right_text)
+            greek = Greek()
+            doc_a = greek.NLP.analyze(text=kwargs.get("left_text"))
+            sequence_a = get_sequence(doc_a)
+            doc_b = greek.NLP.analyze(text=kwargs.get("right_text"))
+            sequence_b = get_sequence(doc_b)
+            (agreement, a_matches_b, b_matches_a) = match_sequences(
+                doc_a, sequence_a, doc_b, sequence_b
             )
-            self.data["longest sequence"] = [longest_sequence,
-                                             longest_sequence]
-            self.data["highlighted text"] = [left_data, right_data]
-            self.data["longest string"] = [longest_string, longest_string]
-            self.data["word count"] = [left_count, right_count]
-            self.table.add_row(left_data, right_data)
-            self.table.add_row(str(left_count) + " words",
-                               str(right_count) + " words")
+            self.table.add_row(
+                get_highlight(a_matches_b, doc_a.pos, doc_a.tokens),
+                get_highlight(b_matches_a, doc_b.pos, doc_b.tokens),
+            )
+            self.table.add_row(str(len(sequence_a)) + " words",
+                               str(len(sequence_b)) + " words")
             self.table.columns[0].footer = (
                 "longest common subsequence: "
-                + str(longest_sequence) + " words"
+                + str(sum(list(agreement.keys())))
+                + " words"
                 + "\nlongest common substring: "
-                + str(longest_string) + " words"
+                + str(max(agreement.keys()))
+                + " words"
             )
         elif kwargs.get("left_text"):
             self.table.add_row(kwargs["left_text"])
         elif kwargs.get("right_text"):
             self.table.add_row(kwargs["right_text"])
-
-    def getData(self):
-        """
-        Get data resulting from analysis, e.g., for testing.
-
-        Returns
-        -------
-        pandas.DataFrame
-            tabular data with one row per passage
-            and one column per analysis result
-
-        See Also
-        --------
-        Synopsis.getTable : transposed data in printable form
-        """
-        return self.data
 
     def getTable(self):
         """
@@ -98,22 +77,22 @@ class Synopsis:
 
 
 def get_highlight(matches, pos, tokens):
-    highlight = ''
+    highlight = ""
     prev_match = False
     for i, token in enumerate(tokens):
         current_match = i in matches
         if current_match and not prev_match:
             if i > 0 and pos[i] != "PUNCT":
-                highlight += ' '
+                highlight += " "
             highlight += "[yellow]" + token
         elif not current_match and prev_match:
             highlight += "[/yellow]"
             if i > 0 and pos[i] != "PUNCT":
-                highlight += ' '
+                highlight += " "
             highlight += token
         else:
             if i > 0 and pos[i] != "PUNCT":
-                highlight += ' '
+                highlight += " "
             highlight += token
         prev_match = current_match
     return highlight

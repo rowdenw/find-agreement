@@ -60,7 +60,7 @@ spacy-loggers==1.0.5
 srsly==2.4.8
 stanza==1.8.2
 stringcase==1.2.0
-sympy==1.12.1
+sympy==1.13.0
 thinc==8.2.5
 threadpoolctl==3.5.0
 toml==0.10.2
