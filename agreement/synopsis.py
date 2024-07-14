@@ -26,6 +26,10 @@ class Synopsis:
     def __init__(self, title, **kwargs):
         self.table = Table(show_footer=True)
         self.table.title = title
+        if kwargs.get("agreement"):
+            highlight = kwargs["agreement"]
+        else:
+            highlight = "yellow"
         if kwargs.get("left_passage"):
             self.table.add_column(kwargs["left_passage"])
         if kwargs.get("right_passage"):
@@ -40,8 +44,10 @@ class Synopsis:
                 doc_a, sequence_a, doc_b, sequence_b
             )
             self.table.add_row(
-                get_highlight(a_matches_b, doc_a.pos, doc_a.tokens),
-                get_highlight(b_matches_a, doc_b.pos, doc_b.tokens),
+                get_highlight(a_matches_b, doc_a.pos, doc_a.tokens,
+                              agreement=highlight),
+                get_highlight(b_matches_a, doc_b.pos, doc_b.tokens,
+                              agreement=highlight),
             )
             self.table.add_row(str(len(sequence_a)) + " words",
                                str(len(sequence_b)) + " words")
@@ -76,27 +82,33 @@ class Synopsis:
         return self.table
 
 
-def get_highlight(matches, pos, tokens):
-    highlight = ""
+def get_highlight(matches, pos, tokens, **kwargs):
+    if kwargs.get("agreement"):
+        highlight = kwargs["agreement"]
+    else:
+        highlight = "yellow"
     prev_match = False
+    span_start = "[" + highlight + "]"
+    span_stop = "[/" + highlight + "]"
     start_of_line = True
+    text = ""
     for i, token in enumerate(tokens):
         current_match = i in matches
         if current_match and not prev_match:
             if pos[i] != "PUNCT" and not start_of_line and not token == "\n":
-                highlight += " "
-            highlight += "[yellow]" + token
+                text += " "
+            text += span_start + token
         elif prev_match and not current_match:
-            highlight += "[/yellow]"
+            text += span_stop
             if pos[i] != "PUNCT" and not start_of_line and not token == "\n":
-                highlight += " "
-            highlight += token
+                text += " "
+            text += token
         else:
             if pos[i] != "PUNCT" and not start_of_line and not token == "\n":
-                highlight += " "
-            highlight += token
+                text += " "
+            text += token
         prev_match = current_match
         start_of_line = (token == '\n')
     if current_match:
-        highlight += "[/yellow]"
-    return highlight
+        text += span_stop
+    return text
