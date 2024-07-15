@@ -17,8 +17,9 @@ https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/grc-byz1904/books/%CE%BA%CE%B
         )
 
     def test_encode_Matt_24_23(self):
-        link = "https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/grc-byz1904"
-        link += "/books/καταματθαιον/chapters/24/verses/23.json"
+        link = "\
+https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/grc-byz1904/books/καταματθαιον/chapters/24/verses/23.json\
+"
         encoded = percent_encode(link)
         self.assertEqual(
             encoded,
