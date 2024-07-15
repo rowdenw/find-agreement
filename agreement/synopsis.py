@@ -9,15 +9,6 @@ class Synopsis:
 
     Attributes
     ----------
-    pandas.DataFrame
-        tabular data with one row per passage
-        and one column per analysis result:
-
-        longest sequence: longest common subsequence
-            https://en.wikipedia.org/wiki/Longest_common_subsequence
-        longest string: longest string of verbatim agreement
-            or common substring
-            https://en.wikipedia.org/wiki/Longest_common_substring
     rich.table
         table with one column per passage and rows of text and analysis,
         suitable for printing to console or SVG
