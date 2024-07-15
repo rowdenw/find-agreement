@@ -20,7 +20,7 @@ This similarity is also visible in the [1904 Patriarchal Greek New Testament](ht
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | καὶ τότε ἐάν τις ὑμῖν εἴπῃ, ἰδοὺ ὧδε ὁ Χριστός, ἰδοὺ ἐκεῖ, μὴ πιστεύετε. | τότε ἐάν τις ὑμῖν εἴπῃ, ἰδοὺ ὧδε ὁ Χριστὸς ἢ ὧδε, μὴ πιστεύσητε· |
 
-Within the same text, there is little [orthographic variation](https://wiki.digitalclassicist.org/Morphological_parsing_or_lemmatising_Greek_and_Latin#Orthographic_Variation). There is different punctuation ('.' versus '·') which can be identified while assigning part of speech.
+Within the same text, there is little [orthographic variation](https://wiki.digitalclassicist.org/Morphological_parsing_or_lemmatising_Greek_and_Latin#Orthographic_Variation). There is different punctuation ('.' versus '·') which can be identified while assigning part of speech and removed from the comparison, since [ancient manuscripts did not use punctuation](https://ehrmanblog.org/when-did-the-bible-get-chapters-and-verses/).
 
 However, there are different inflected forms: Χριστός versus Χριστὸς, and πιστεύσητε versus πιστεύετε. Finding agreement consequently requires [lemmatisation](https://wiki.digitalclassicist.org/Morphological_parsing_or_lemmatising_Greek_and_Latin#Lemmatisation_and_morphological_analysis) to find the lemmata of each passage: χριστός for Χριστὸς, and πιστεύω for πιστεύσητε and πιστεύετε. A sequence matcher can then find contiguous matching subsequences:
 
@@ -56,6 +56,7 @@ Table output can then highlight these contiguous matching subsequences:
 
 This prototype uses the following libraries:
 
+* [Matplotlib](https://matplotlib.org/stable/) to create visualizations of strings of verbatim agreement;
 * [Pandas](https://pandas.pydata.org) to normalize JSON data from Bible API;
 * [pytest](https://docs.pytest.org/en/8.2.x/) to simplify testing; and
 * [Rich](https://github.com/Textualize/rich) to create the rich text (with color and style) in tables for synopses (see for example [John's Imprisonment](http://www.hypotyposeis.org/synoptic-problem/2004/10/johns-imprisonment.html) created by Stephen C. Carlson).
@@ -81,6 +82,7 @@ pip install -U pytest
 pip install rich
 pip install cltk
 pip install grc_odycy_joint_sm@https://huggingface.co/chcaa/grc_odycy_joint_sm/resolve/main/grc_odycy_joint_sm-any-py3-none-any.whl
+pip install matplotlib
 ```
 
 ### Macs
