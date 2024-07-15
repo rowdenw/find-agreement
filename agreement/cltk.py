@@ -9,7 +9,8 @@ class Greek:
 
 def get_sequence(doc):
     return [
-        i for i, pos in enumerate(doc.pos) if pos != "PUNCT" and doc.tokens[i] != "\n"
+        i for i, pos in enumerate(doc.pos)
+        if pos != "PUNCT" and doc.tokens[i] != "\n"
     ]
 
 
@@ -31,8 +32,10 @@ def match_sequences(doc_a, sequence_a, doc_b, sequence_b):
             sequence_b_matches_a[prev.b + prev.size: match.b] = [False] * (
                 match.b - prev.size - prev.b
             )
-        sequence_a_matches_b[match.a: match.a + match.size] = [True] * match.size
-        sequence_b_matches_a[match.b: match.b + match.size] = [True] * match.size
+        sequence_a_matches_b[match.a:
+                             match.a + match.size] = [True] * match.size
+        sequence_b_matches_a[match.b:
+                             match.b + match.size] = [True] * match.size
         prev = match
     return (
         agreement,
