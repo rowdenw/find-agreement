@@ -1,23 +1,19 @@
 import matplotlib.pyplot as plt
 
+from agreement.agreement import match_sequences
 from agreement.bible_api import get_chapter
-from agreement.cltk import Greek, get_sequence, match_sequences
+from agreement.passage import GreekPassage
 
 
 def main():
-    greek = Greek()
-    doc_a = greek.NLP.analyze(
-        text=get_chapter("grc-byz1904", "καταμαρκον",
-                         13, 21, 23))
-    sequence_a = get_sequence(doc_a)
-    doc_b = greek.NLP.analyze(
-        text=get_chapter("grc-byz1904", "καταματθαιον",
-                         24, 23, 25)
-    )
-    sequence_b = get_sequence(doc_b)
+    passageA = GreekPassage(get_chapter("grc-byz1904", "καταμαρκον",
+                                        13, 21, 23))
+    passageB = GreekPassage(get_chapter("grc-byz1904", "καταματθαιον",
+                                        24, 23, 25))
     (agreement, a_matches_b, b_matches_a) = match_sequences(
-        doc_a, sequence_a, doc_b, sequence_b
-    )
+        passageA.lemmata, passageA.clean,
+        passageB.lemmata, passageB.clean
+        )
 
     length = list(agreement.keys())
     length.sort()

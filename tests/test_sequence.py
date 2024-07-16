@@ -1,4 +1,5 @@
-from agreement.cltk import Greek, get_sequence, match_sequences
+from agreement.agreement import match_sequences
+from agreement.passage import GreekPassage
 import tests.config as config
 
 
@@ -32,13 +33,10 @@ def grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_3_7_9_sequence():
 
 
 def test_match_sequences():
-    greek = Greek()
-    doc_a = greek.NLP.analyze(text=config.grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_3_7_10())
-    sequence_a = get_sequence(doc_a)
-    doc_b = greek.NLP.analyze(text=config.grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_3_7_9())
-    sequence_b = get_sequence(doc_b)
+    passageA = GreekPassage(config.grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_3_7_10())
+    passageB = GreekPassage(config.grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_3_7_9())
     (agreement, a_matches_b, b_matches_a) = match_sequences(
-        doc_a, sequence_a, doc_b, sequence_b
+        passageA.lemmata, passageA.clean, passageB.lemmata, passageB.clean
     )
     assert a_matches_b[0:23] == (
         [3]  # ὁ
@@ -61,14 +59,10 @@ def test_match_sequences():
 
 
 def test_Matt_3_7_10_sequence():
-    greek = Greek()
-    doc = greek.NLP.analyze(text=config.grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_3_7_10())
-    sequence = get_sequence(doc)
-    assert sequence == grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_3_7_10_sequence()
+    greekPassage = GreekPassage(config.grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_3_7_10())
+    assert greekPassage.clean == grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_3_7_10_sequence()
 
 
 def test_Luke_3_7_9_sequence():
-    greek = Greek()
-    doc = greek.NLP.analyze(text=config.grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_3_7_9())
-    sequence = get_sequence(doc)
-    assert sequence == grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_3_7_9_sequence()
+    greekPassage = GreekPassage(config.grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_3_7_9())
+    assert greekPassage.clean == grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_3_7_9_sequence()

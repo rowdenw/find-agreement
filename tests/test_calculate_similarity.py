@@ -1,13 +1,14 @@
-from agreement.cltk import Greek, get_n_gram_Jaccard_index
+from agreement.agreement import get_n_gram_Jaccard_index
+from agreement.passage import GreekPassage
 from tests.config import grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_24_23
 from tests.config import grc_byz1904_ΚΑΤΑ_ΜΑΡΚΟΝ_13_21
 
 
 def test_answer():
-    greek = Greek()
 
-    doc_a = greek.NLP.analyze(text=grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_24_23)
-    doc_b = greek.NLP.analyze(text=grc_byz1904_ΚΑΤΑ_ΜΑΡΚΟΝ_13_21)
+    passageA = GreekPassage(grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_24_23)
+    passageB = GreekPassage(grc_byz1904_ΚΑΤΑ_ΜΑΡΚΟΝ_13_21)
+    # TODO: Move these ranges into a test for clean.
     sequence_a = (
         list(range(0, 5))  # τότε ἐάν τις ὑμῖν εἴπῃ
         + list(range(6, 12))  # ἰδοὺ ὧδε ὁ Χριστὸς ἢ ὧδε
@@ -26,8 +27,7 @@ def test_answer():
     # χριστός ἤ ὧδε
     # ἤ ὧδε μή πιστεύω
     # ὧδε μή πιστεύω
-    lemmata_a = [doc_a.lemmata[i] for i in sequence_a]
-    print(lemmata_a)
+    lemmata_a = [passageA.lemmata[i] for i in sequence_a]
 
     # καί τότε ἐάν τὶς ὑμεῖς εἶπον ἰδοὺ ὧδε ὁ χριστός ἰδοὺ ἐκεῖ μή πιστεύω
     # has 5 unique trigrams:
@@ -36,7 +36,7 @@ def test_answer():
     # χριστός ἰδοὺ ἐκεῖ
     # ἰδοὺ ἐκεῖ μή
     # ἐκεῖ μή πιστεύω
-    lemmata_b = [doc_b.lemmata[i] for i in sequence_b]
+    lemmata_b = [passageB.lemmata[i] for i in sequence_b]
 
     # 7 common trigrams:
     # τότε ἐάν τὶς

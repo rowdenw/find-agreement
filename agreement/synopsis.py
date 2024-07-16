@@ -1,11 +1,7 @@
 from rich.table import Table
 
-from agreement.cltk import (
-    Greek,
-    get_n_gram_Jaccard_index,
-    get_sequence,
-    match_sequences,
-)
+from agreement.agreement import get_n_gram_Jaccard_index, match_sequences
+from agreement.passage import GreekPassage
 
 
 class Synopsis:
@@ -39,39 +35,37 @@ class Synopsis:
                 highlight = kwargs["agreement"]
             else:
                 highlight = "yellow"
-            greek = Greek()
-            doc_a = greek.NLP.analyze(text=kwargs.get("left_text"))
-            sequence_a = get_sequence(doc_a)
-            doc_b = greek.NLP.analyze(text=kwargs.get("right_text"))
-            sequence_b = get_sequence(doc_b)
+            passageA = GreekPassage(kwargs.get("left_text"))
+            passageB = GreekPassage(kwargs.get("right_text"))
             (agreement, a_matches_b, b_matches_a) = match_sequences(
-                doc_a, sequence_a, doc_b, sequence_b
+                passageA.lemmata, passageA.clean,
+                passageB.lemmata, passageB.clean
             )
             self.table.add_row(
                 get_highlight(
                     a_matches_b,
-                    doc_a.pos,
-                    doc_a.tokens,
+                    passageA.pos,
+                    passageA.tokens,
                     agreement=highlight,
                     column=left_column,
                 ),
                 get_highlight(
                     b_matches_a,
-                    doc_b.pos,
-                    doc_b.tokens,
+                    passageB.pos,
+                    passageB.tokens,
                     agreement=highlight,
                     column=right_column,
                 ),
             )
-            words_a = str(len(sequence_a))
-            words_b = str(len(sequence_b))
+            words_a = str(len(passageA.clean))
+            words_b = str(len(passageB.clean))
             self.table.add_row(
                 words_a + " words",
                 words_b + " words"
             )
             J = get_n_gram_Jaccard_index(
-                    [doc_a.lemmata[i] for i in sequence_a],
-                    [doc_b.lemmata[i] for i in sequence_b],
+                    [passageA.lemmata[i] for i in passageA.clean],
+                    [passageB.lemmata[i] for i in passageB.clean],
                     3,
                 )
 
