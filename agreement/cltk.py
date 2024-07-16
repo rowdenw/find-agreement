@@ -7,6 +7,30 @@ class Greek:
         self.NLP = NLP(language="grc", suppress_banner=True)
 
 
+def get_n_gram_Jaccard_index(lemmata_a, lemmata_b, n):
+    n_grams_a = []
+    for i in range(len(lemmata_a) - (n - 1)):
+        n_gram = [lemmata_a[i]]
+        for j in range(1, n):
+            n_gram.append(lemmata_a[i + j])
+        n_grams_a.append(n_gram)
+
+    intersection = 0
+
+    n_grams_b = []
+    for i in range(len(lemmata_b) - (n - 1)):
+        n_gram = [lemmata_b[i]]
+        for j in range(1, n):
+            n_gram.append(lemmata_b[i + j])
+        n_grams_b.append(n_gram)
+        if n_gram in n_grams_a:
+            intersection += 1
+
+    # Jaccard index = intersection / union
+    J = intersection / (len(n_grams_a) + len(n_grams_b) - intersection)
+    return J
+
+
 def get_sequence(doc):
     return [
         i for i, pos in enumerate(doc.pos)

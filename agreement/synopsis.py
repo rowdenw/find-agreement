@@ -1,6 +1,11 @@
 from rich.table import Table
 
-from agreement.cltk import Greek, get_sequence, match_sequences
+from agreement.cltk import (
+    Greek,
+    get_n_gram_Jaccard_index,
+    get_sequence,
+    match_sequences,
+)
 
 
 class Synopsis:
@@ -44,25 +49,42 @@ class Synopsis:
             )
             self.table.add_row(
                 get_highlight(
-                    a_matches_b, doc_a.pos, doc_a.tokens,
-                    agreement=highlight, column=left_column
+                    a_matches_b,
+                    doc_a.pos,
+                    doc_a.tokens,
+                    agreement=highlight,
+                    column=left_column,
                 ),
                 get_highlight(
-                    b_matches_a, doc_b.pos, doc_b.tokens,
-                    agreement=highlight, column=right_column
+                    b_matches_a,
+                    doc_b.pos,
+                    doc_b.tokens,
+                    agreement=highlight,
+                    column=right_column,
                 ),
             )
+            words_a = str(len(sequence_a))
+            words_b = str(len(sequence_b))
             self.table.add_row(
-                str(len(sequence_a)) + " words",
-                str(len(sequence_b)) + " words"
+                words_a + " words",
+                words_b + " words"
             )
+            J = get_n_gram_Jaccard_index(
+                    [doc_a.lemmata[i] for i in sequence_a],
+                    [doc_b.lemmata[i] for i in sequence_b],
+                    3,
+                )
+
+            subsequence = sum(list(agreement.keys()))
             self.table.columns[0].footer = (
                 "longest common subsequence: "
-                + str(sum(list(agreement.keys())))
-                + " words"
-                + "\nlongest common substring: "
+                + str(subsequence)
+                + " words\n"
+                + "longest common substring: "
                 + str(max(agreement.keys()))
-                + " words"
+                + " words\n"
+                + "trigram Jaccard index: "
+                + "{:.2f}".format(J)
             )
         elif kwargs.get("left_text"):
             self.table.add_row(kwargs["left_text"])
