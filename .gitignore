@@ -13,3 +13,8 @@ __pycache__/
 # Environments
 
 .venv
+
+# Folder for generated output from scripts
+
+docs/_static/
+
