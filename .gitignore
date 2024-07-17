@@ -16,5 +16,5 @@ __pycache__/
 
 # Folder for generated output from scripts
 
-docs/_static/
+reports/
 
