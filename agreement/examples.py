@@ -1,7 +1,8 @@
-from agreement.bible_api import get_chapter
 from rich.console import Console
-from agreement.synopsis import Synopsis
 
+from agreement.bible_api import get_chapter
+from agreement.config import get_report_path
+from agreement.synopsis import Synopsis
 
 def main():
     synopsis = Synopsis(
@@ -14,7 +15,9 @@ def main():
     table = synopsis.table
     console = Console(record=True)
     console.print(table)
-    console.save_svg("docs/_static/291-Mark+Matt.svg")
+
+    svg_path = get_report_path('291-Mark+Matt.svg')
+    console.save_svg(svg_path)
 
     synopsis = Synopsis(
         "14 John's Preaching of Repentance",
@@ -29,7 +32,9 @@ def main():
     table = synopsis.table
     console = Console(record=True)
     console.print(table)
-    console.save_html("docs/_static/014-Matt+Luke.html")
+
+    html_path = get_report_path('014-Matt+Luke.html')
+    console.save_html(html_path)
 
     synopsis = Synopsis(
         "68 On Judging (Log and Speck)",
@@ -41,8 +46,9 @@ def main():
     table = synopsis.table
     console = Console(record=True)
     console.print(table)
-    console.save_html("docs/_static/068-Matt+Luke.html")
 
+    html_path = get_report_path('068-Matt+Luke.html')
+    console.save_html(html_path)
 
 if __name__ == "__main__":
     main()

@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 
 from agreement.agreement import match_sequences
 from agreement.bible_api import get_chapter
+from agreement.config import get_report_path
 from agreement.passage import GreekPassage
 
 
@@ -28,7 +29,10 @@ def main():
     ax.set_xlabel("Total Words (length of SVA x number of instances)")
     ax.set_ylabel("Lengths of String of Verbatim Agreement (SVA)")
     ax.set_yticks(y_pos)
-    fig.savefig("docs/_static/291-Mark+Matt.png")
+
+    fig_path = get_report_path('291-Mark+Matt.png')
+    fig.savefig(fig_path)
+
     plt.show()
 
 
