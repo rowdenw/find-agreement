@@ -26,8 +26,10 @@ def match_sequences(lemmata_a, sequence_a, lemmata_b, sequence_b):
         prev = match
     return (
         agreement,
-        [pos for i, pos in enumerate(sequence_a) if sequence_a_matches_b[i]],
-        [pos for i, pos in enumerate(sequence_b) if sequence_b_matches_a[i]],
+        [position for i, position in enumerate(sequence_a)
+         if sequence_a_matches_b[i]],
+        [position for i, position in enumerate(sequence_b)
+         if sequence_b_matches_a[i]],
     )
 
 

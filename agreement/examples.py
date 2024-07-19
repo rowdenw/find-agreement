@@ -4,6 +4,7 @@ from agreement.bible_api import get_chapter
 from agreement.config import get_report_path
 from agreement.synopsis import Synopsis
 
+
 def main():
     synopsis = Synopsis(
         "291 False Christs and False Prophets",
@@ -16,7 +17,7 @@ def main():
     console = Console(record=True)
     console.print(table)
 
-    svg_path = get_report_path('291-Mark+Matt.svg')
+    svg_path = get_report_path("291-Mark+Matt.svg")
     console.save_svg(svg_path)
 
     synopsis = Synopsis(
@@ -27,13 +28,13 @@ def main():
         right_text=get_chapter("grc-byz1904", "καταλουκαν", 3, 7, 9),
         agreement="green",
         left_column="blue",
-        right_column="yellow"
+        right_column="yellow",
     )
     table = synopsis.table
     console = Console(record=True)
     console.print(table)
 
-    html_path = get_report_path('014-Matt+Luke.html')
+    html_path = get_report_path("014-Matt+Luke.html")
     console.save_html(html_path)
 
     synopsis = Synopsis(
@@ -47,8 +48,9 @@ def main():
     console = Console(record=True)
     console.print(table)
 
-    html_path = get_report_path('068-Matt+Luke.html')
+    html_path = get_report_path("068-Matt+Luke.html")
     console.save_html(html_path)
+
 
 if __name__ == "__main__":
     main()

@@ -115,7 +115,7 @@ Find Agreement is available under the [MIT License](LICENSE).
 | Priority | Theme     | Backlog Item                                                 | Status                                                       | Score |
 | -------- | --------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ----- |
 |          | Scholar   | Pick best critical edition.                                  | WIP                                                          |       |
-|          | Refactor  | Add messages to tests.                                       |                                                              |       |
+|          | Refactor  | Add [messages](https://pypi.org/project/pytest-docs/) to tests. |                                                              |       |
 |          | Scholar   | Switch to including [Society of Biblical Literature Greek New Testament](https://github.com/LogosBible/SBLGNT). |                                                              |       |
 |          | Display   | Add a third column.                                          |                                                              |       |
 |          | Interface | Make [runnable from command line](https://medium.com/@evaGachirwa/running-python-script-with-arguments-in-the-command-line-93dfa5f10eff). |                                                              |       |
