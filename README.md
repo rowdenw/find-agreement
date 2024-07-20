@@ -56,19 +56,16 @@ Table output can then highlight these contiguous matching subsequences:
 
 This prototype uses the following libraries:
 
-* [Matplotlib](https://matplotlib.org/stable/) to create visualizations of strings of verbatim agreement;
-* [Pandas](https://pandas.pydata.org) to normalize JSON data from Bible API;
-* [pytest](https://docs.pytest.org/en/8.2.x/) to simplify testing; and
-* [Rich](https://github.com/Textualize/rich) to create the rich text (with color and style) in tables for synopses (see for example [John's Imprisonment](http://www.hypotyposeis.org/synoptic-problem/2004/10/johns-imprisonment.html) created by Stephen C. Carlson).
+| Module         | Library                                                      | Purpose                                                      | Notes                                                        |
+| -------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| agreement      | [difflib](https://docs.python.org/3/library/difflib.html#sequencematcher-objects) | Compare "clean" lists of lemmata and return matching [substrings](https://en.wikipedia.org/wiki/Longest_common_substring). |                                                              |
+| bible_api      | [pandas](https://pandas.pydata.org)                          | Normalize JSON data from [Bible API](https://github.com/wldeh/bible-api), free unlimited access to 200+ versions, including the New Testament in Ancient Greek |                                                              |
+| bible_api      | urllib                                                       | Request JSON data from Bible API.                            | [urllib3>=2.0 does not work with system Python on macOS](https://github.com/urllib3/urllib3/issues/3020). |
+| passage        | [NLP](https://docs.cltk.org/en/latest/quickstart.html) from [Classical Language Toolkit](https://aclanthology.org/2021.acl-demo.3/). | Process text with [a general-purpose NLP pipeline for Ancient Greek](https://aclanthology.org/2023.latechclfl-1.14/). | The [Classical Language Toolkit currently supports Python versions 3.7, 3.8, 3.9](https://docs.cltk.org/en/latest/installation.html). |
+| plot           | [Matplotlib](https://matplotlib.org/stable/)                 | Create visualizations of strings of verbatim agreement.      |                                                              |
+| synopsis_table | [Rich](https://github.com/Textualize/rich)                   | Create the rich text (with color and style) in tables for synopses (see for example [John's Imprisonment](http://www.hypotyposeis.org/synoptic-problem/2004/10/johns-imprisonment.html) created by Stephen C. Carlson). |                                                              |
 
-It also uses several libraries for analysis:
-
-* [Bible API](https://github.com/wldeh/bible-api) for free unlimited access to 200+ versions, including the New Testament in Ancient Greek; and
-* [Classical Language Toolkit](https://aclanthology.org/2021.acl-demo.3/), from which [NLP is imported to process text](https://docs.cltk.org/en/latest/quickstart.html) with [a general-purpose NLP pipeline for Ancient Greek](https://aclanthology.org/2023.latechclfl-1.14/).
-
-Note that the [Classical Language Toolkit currently supports Python versions 3.7, 3.8, 3.9](https://docs.cltk.org/en/latest/installation.html).
-
-A detailed list is in [requirements](requirements.txt) and may be installed into a virtual environment as usual:
+In addition, tests use [pytest](https://docs.pytest.org/en/8.2.x/). A detailed list is in [requirements](requirements.txt) and may be installed into a virtual environment as usual:
 
 ```python
 pip install -r requirements.txt
@@ -87,7 +84,7 @@ pip install matplotlib
 
 ### Macs
 
-Note that [urllib3>=2.0 does not work with system Python on macOS](https://github.com/urllib3/urllib3/issues/3020). Also, on M1 Macs, [thinc-apple-ops is up to eight times faster](https://github.com/explosion/thinc-apple-ops):
+On M1 Macs, [thinc-apple-ops is up to eight times faster](https://github.com/explosion/thinc-apple-ops):
 
 ```python
 pip install 'spacy[apple]==3.7.4'
@@ -115,9 +112,9 @@ Find Agreement is available under the [MIT License](LICENSE).
 | Priority | Theme     | Backlog Item                                                 | Status                                                       | Score |
 | -------- | --------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ----- |
 |          | Scholar   | Pick best critical edition.                                  | WIP                                                          |       |
+|          | Display   | Add a third column.                                          | WIP                                                          |       |
 |          | Refactor  | Add [messages](https://pypi.org/project/pytest-docs/) to tests. |                                                              |       |
 |          | Scholar   | Switch to including [Society of Biblical Literature Greek New Testament](https://github.com/LogosBible/SBLGNT). |                                                              |       |
-|          | Display   | Add a third column.                                          |                                                              |       |
 |          | Interface | Make [runnable from command line](https://medium.com/@evaGachirwa/running-python-script-with-arguments-in-the-command-line-93dfa5f10eff). |                                                              |       |
 |          | Interface | Add example to [JupyterLab](https://github.com/jupyterlab/jupyterlab-desktop/blob/master/cli.md). |                                                              |       |
 |          | CPD       | [CPD](https://pmd.github.io/pmd/pmd_userdocs_cpd.html) [works with tokens](https://pmd.github.io/pmd/pmd_devdocs_major_adding_new_cpd_language.html) created by a [lexer](https://docs.pmd-code.org/apidocs/pmd-core/7.4.0-SNAPSHOT/net/sourceforge/pmd/cpd/CpdLexer.html#), and so may be able to work with [lemmata](https://docs.cltk.org/en/latest/cltk.core.html#cltk.core.data_types.Doc.lemmata) by [adding a new language](https://pmd.github.io/pmd/pmd_devdocs_major_adding_new_cpd_language.html), if they can be passed from Python to Java and back. |                                                              |       |

@@ -1,26 +1,11 @@
 import rich
+from agreement.color_scheme import ColorScheme
+from agreement.color_scheme import GoodacreColorScheme
 from agreement.passage import GreekPassage
+from agreement.color_scheme import get_agreement_type
 from tests import config
 from tests.config import grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_13_18_19
-from tests.test_print_Greek import print_Greek_token
-
-
-agreement_type_Matt_13_31 = [2, 3, 2, 2, 2, 0, 6, 6, 6, 6, 2, 2, 6, 6, 0, 6,
-                             6, 6, 2, 2, 2, 2, 2, 0, ]
-
-
-agreement_type_Mark_4_30_32 = [1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 3, 1,
-                               0, ]
-
-
-agreement_type_Luke_13_18 = [4, 4, 0, 4, 6, 6, 6, 6, 4, 4, 0, 4, 4, 4, 4, 0, ]
-
-
-def get_agreement_type(in_passage):
-    agreement_type = 0
-    for passage in in_passage:
-        agreement_type += 2**passage
-    return agreement_type
+from agreement.synopsis_table import print_Greek_token
 
 
 def test_agreement_type():
@@ -34,19 +19,6 @@ def test_agreement_type():
     assert get_agreement_type([0, 1, 2]) == 7  # e.g., in all Synoptic Gospels
 
 
-class ColorScheme:
-    def __init__(self, *colors):
-        self._color = {}
-        for index, color in enumerate(colors):
-            self._color[index] = color
-
-    def get_color(self, index):
-        return self._color[index]
-
-    def set_color(self, index, color):
-        self._color[index] = color
-
-
 def test_color_scheme():
     colorScheme = ColorScheme(None, None, None, "yellow")
     assert colorScheme.get_color(3) == "yellow"
@@ -56,24 +28,43 @@ def test_color_scheme():
 
 def get_color_text(colorScheme, token_agreement):
     prev = None
-    styles = []
-    tokens = []
     text = rich.text.Text()
     for pos, token, type in token_agreement:
-        tokens.append(print_Greek_token(token, pos, prev))
-        styles.append(colorScheme.get_color(type))
+        to_print = print_Greek_token(token, pos, prev)
+        style = colorScheme.get_color(type)
+        text.append(to_print, style=style)
         prev = token
-    text.append_tokens(zip(tokens, styles))
     return text.markup
 
 
+agreement_type_Matt_13_31 = [1, 1, 1, 1, 7, 0, 5, 5, 7, 7, 7, 1, 1, 1, 0, 1,
+                             1, 1, 1, 3, 1, 1, 7, 0]
+
+
 def test_color_Matt_13_31():
-    color_text = "Ἄλλην[yellow] παραβολὴν[/yellow] παρέθηκεν αὐτοῖς λέγων·\
-[green] ὁμοία[green][/green] ἐστὶν[green][/green] ἡ[green][/green] βασιλεία\
-[/green] τῶν οὐρανῶν[green] κόκκῳ[green][/green] σινάπεως[/green],[green] ὃν\
-[green][/green] λαβὼν[green][/green] ἄνθρωπος[/green] ἔσπειρεν ἐν τῷ ἀγρῷ \
-αὐτοῦ·"
-    colorScheme = ColorScheme(None, None, None, "yellow", None, None, "green")
+    color_text = "Ἄλλην παραβολὴν παρέθηκεν αὐτοῖς[blue] λέγων[/blue]·\
+[orange] ὁμοία[orange][/orange] ἐστὶν[blue][/orange] ἡ[blue][/blue] βασιλεία\
+[blue][/blue] τῶν[/blue] οὐρανῶν κόκκῳ σινάπεως, ὃν λαβὼν ἄνθρωπος ἔσπειρεν\
+[purple] ἐν[/purple] τῷ ἀγρῷ[blue] αὐτοῦ[/blue]·"
+    column_Matthew = 0
+    column_Mark = 1
+    column_Luke = 2
+    colorScheme = ColorScheme()
+    # https://www.facebook.com/groups/212992206399733/posts/1194217374943873/
+    # Triple Trad in Blue
+    # https://en.wikipedia.org/wiki/Synoptic_Gospels#Triple_tradition
+    colorScheme.set_color(get_agreement_type([column_Matthew, column_Mark,
+                                              column_Luke]), "blue")
+    # Matt-Mark in Purple...
+    colorScheme.set_color(get_agreement_type([column_Matthew, column_Mark]),
+                          "purple")
+    # Mark-Luke in Green...
+    colorScheme.set_color(get_agreement_type([column_Mark, column_Luke]),
+                          "green")
+    # Double Trad in orange...
+    # https://en.wikipedia.org/wiki/Synoptic_Gospels#Double_tradition
+    colorScheme.set_color(get_agreement_type([column_Matthew, column_Luke]),
+                          "orange")
     passage = GreekPassage(config.grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_13_31)
     pos = passage.pos
     tokens = passage.tokens
@@ -82,11 +73,19 @@ def test_color_Matt_13_31():
     assert row == color_text
 
 
+agreement_type_Mark_4_30_32 = [1, 7, 0, 1, 1, 7, 7, 7, 5, 0, 1, 3, 5, 1, 1,
+                               7, 0]
+
+
 def test_color_Mark_4_30_32():
-    # TODO: Test and fix spacing algorithm. Or does Rich have something?
-    color_text = "Καὶ ἔλεγε· πῶς ὁμοιώσωμεν τὴν βασιλείαν τοῦ Θεοῦ; ἢ ἐν τίνι\
-[yellow] παραβολῇ[/yellow] παραβάλωμεν αὐτήν"
-    colorScheme = ColorScheme(None, None, None, "yellow", None, None, "green")
+    color_text = "[blue]Καὶ[black on white][/blue] ἔλεγε[/black on white]·\
+[blue] πῶς[blue][/blue] ὁμοιώσωμεν[black on white][/blue] τὴν[black on white]\
+[/black on white] βασιλείαν[black on white][/black on white] τοῦ\
+[/black on white] Θεοῦ;[blue] ἢ[purple][/blue] ἐν[/purple] τίνι[blue] παραβολῇ\
+[blue][/blue] παραβάλωμεν[black on white][/blue] αὐτήν[/black on white];"
+    # http://www.hypotyposeis.org/synoptic-problem/2004/10/johns-imprisonment.html
+    colorScheme = ColorScheme(None, "blue", "red", "purple",
+                              "green", None, None, "black on white")
     passage = GreekPassage(config.grc_byz1904_ΚΑΤΑ_ΜΑΡΚΟΝ_4_30)
     pos = passage.pos
     tokens = passage.tokens
@@ -96,10 +95,18 @@ def test_color_Mark_4_30_32():
     )
 
 
+agreement_type_Luke_13_18 = [7, 4, 0, 4, 6, 6, 7, 7, 7, 5, 0, 4, 5, 4, 7, 0]
+
+
 def test_color_Luke_13_18():
-    color_text = "Ἔλεγε δέ· τίνι[green] ὁμοία[green][/green] ἐστὶν[green]\
-[/green] ἡ[green][/green] βασιλεία[/green] τοῦ Θεοῦ, καὶ τίνι ὁμοιώσω αὐτήν;"
-    colorScheme = ColorScheme(None, None, None, "yellow", None, None, "green")
+    color_text = "[brown]Ἔλεγε[yellow][/brown] δέ[/yellow]·[yellow] τίνι\
+[orange][/yellow] ὁμοία[orange][/orange] ἐστὶν[brown][/orange] ἡ[brown]\
+[/brown] βασιλεία[brown][/brown] τοῦ[green][/brown] Θεοῦ[/green],[yellow] καὶ\
+[green][/yellow] τίνι[yellow][/green] ὁμοιώσω[brown][/yellow] αὐτήν[/brown];"
+    column_Matthew = 0
+    column_Mark = 1
+    column_Luke = 2
+    colorScheme = GoodacreColorScheme(column_Matthew, column_Mark, column_Luke)
     passage = GreekPassage(grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_13_18_19)
     pos = passage.pos
     tokens = passage.tokens

@@ -1,12 +1,12 @@
 import unittest
 
 import tests.config as config
-from agreement.synopsis import Synopsis
+from agreement.synopsis_table import SynopsisTable
 
 
 class TestMakeTable(unittest.TestCase):
     def test_one_title_header(self):
-        synopsis = Synopsis(
+        synopsis = SynopsisTable(
             "291 False Christs and False Prophets",
             left_passage="Mark 13:21",
             left_text=config.grc_byz1904_ΚΑΤΑ_ΜΑΡΚΟΝ_13_21,
@@ -17,7 +17,7 @@ class TestMakeTable(unittest.TestCase):
         self.assertEqual(table.row_count, 1)
 
     def test_two_title_header(self):
-        synopsis = Synopsis(
+        synopsis = SynopsisTable(
             "291 False Christs and False Prophets",
             left_passage="Mark 13:21",
             right_passage="Matt. 24:23",

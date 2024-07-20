@@ -1,5 +1,5 @@
 from agreement.passage import GreekPassage
-from agreement.synopsis import get_highlight
+from agreement.synopsis_table import get_highlight
 
 Matt_3_7_start = "ἰδὼν δὲ πολλοὺς τῶν Φαρισαίων καὶ Σαδδουκαίων ἐρχομένους \
 ἐπὶ τὸ βάπτισμα αὐτοῦ εἶπεν αὐτοῖς· γεννήματα ἐχιδνῶν,"

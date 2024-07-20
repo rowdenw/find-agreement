@@ -1,4 +1,6 @@
 from agreement.agreement import match_sequences
+from agreement.agreement import calculate_agreement
+from agreement.agreement import calculate_agreement_type
 from agreement.passage import GreekPassage
 from tests import config
 
@@ -61,53 +63,16 @@ def test_calculate_agreement_128():
     assert agreements[2][1] == 2
 
 
-def calculate_agreement(passages):
-    agreements = []
-    matches = [
-        [[] for i in range(len(passages))] for ji in range(len(passages))
-        ]
-
-    for left in range(len(passages)):
-        for right in range(left + 1, len(passages)):
-            (agreement,
-             matches[left][right],
-             matches[right][left]) = match_sequences(passages[left].lemmata,
-                                                     passages[left].clean,
-                                                     passages[right].lemmata,
-                                                     passages[right].clean,
-                                                     )
-            agreements.append(agreement)
-    return agreements, matches
-
-
 def test_calculate_agreement_type_128():
     passages = [
-        GreekPassage(config.grc_byz1904_ΚΑΤΑ_ΜΑΡΚΟΝ_4_30),
         GreekPassage(config.grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_13_31),
+        GreekPassage(config.grc_byz1904_ΚΑΤΑ_ΜΑΡΚΟΝ_4_30),
         GreekPassage(config.grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_13_18_19),
     ]
-    agreements, matches = calculate_agreement(passages)
-    agreement_type = []
-    for column in range(len(passages)):
-        agreement_type.append(
-            [
-                2**column if j in passages[column].clean else 0
-                for j in range(len(passages[column].tokens))
-                ]
-                )
-    for left in range(len(agreement_type)):
-        for right in range(left+1, len(agreement_type)):
-            agreement_type[left] = [
-                agreement_type[left][position] + 2**right
-                if position in matches[left][right]
-                else agreement_type[left][position]
-                for position in range(len(agreement_type[left]))
-            ]
-            agreement_type[right] = [
-                agreement_type[right][position] + 2**left
-                if position in matches[right][left]
-                else agreement_type[right][position]
-                for position in range(len(agreement_type[right]))
-            ]
-    print(agreement_type)
-    assert 1 == 0
+    agreement_type = calculate_agreement_type(passages)
+    assert agreement_type[0] == [1, 1, 1, 1, 7, 0, 5, 5, 7, 7, 7, 1, 1, 1, 0,
+                                 1, 1, 1, 1, 3, 1, 1, 7, 0]
+    assert agreement_type[1] == [2, 7, 0, 2, 2, 7, 7, 7, 6, 0, 2, 3, 6, 2, 2,
+                                 7, 0]
+    assert agreement_type[2] == [7, 4, 0, 4, 5, 5, 7, 7, 7, 6, 0, 4, 6, 4, 7,
+                                 0]

@@ -55,3 +55,49 @@ def get_n_gram_Jaccard_index(lemmata_a, lemmata_b, n):
     # Jaccard index = intersection / union
     J = intersection / (len(n_grams_a) + len(n_grams_b) - intersection)
     return J
+
+
+def calculate_agreement(passages):
+    agreements = []
+    matches = [
+        [[] for i in range(len(passages))] for ji in range(len(passages))
+        ]
+
+    for left in range(len(passages)):
+        for right in range(left + 1, len(passages)):
+            (agreement,
+             matches[left][right],
+             matches[right][left]) = match_sequences(passages[left].lemmata,
+                                                     passages[left].clean,
+                                                     passages[right].lemmata,
+                                                     passages[right].clean,
+                                                     )
+            agreements.append(agreement)
+    return agreements, matches
+
+
+def calculate_agreement_type(passages):
+    agreements, matches = calculate_agreement(passages)
+    agreement_type = []
+    for column in range(len(passages)):
+        agreement_type.append(
+            [
+                2**column if j in passages[column].clean else 0
+                for j in range(len(passages[column].tokens))
+                ]
+                )
+    for left in range(len(agreement_type)):
+        for right in range(left+1, len(agreement_type)):
+            agreement_type[left] = [
+                agreement_type[left][position] + 2**right
+                if position in matches[left][right]
+                else agreement_type[left][position]
+                for position in range(len(agreement_type[left]))
+            ]
+            agreement_type[right] = [
+                agreement_type[right][position] + 2**left
+                if position in matches[right][left]
+                else agreement_type[right][position]
+                for position in range(len(agreement_type[right]))
+            ]
+    return agreement_type

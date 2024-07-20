@@ -4,7 +4,7 @@ from agreement.agreement import get_n_gram_Jaccard_index, match_sequences
 from agreement.passage import GreekPassage
 
 
-class Synopsis:
+class SynopsisTable:
     """
     A synopsis of passages and text.
 
@@ -146,3 +146,22 @@ def get_spacing(pos, start_of_line, token):
         return " "
     else:
         return ""
+
+
+def print_Greek_token(token, pos, previous, scripta_continua=False):
+    # https://www.billmounce.com/greekalphabet/greek-punctuation-syllabification
+    # https://blog.greek-language.com/2022/02/14/punctuation-in-ancient-greek-texts-part-i/
+    # https://www.opoudjis.net/unicode/punctuation.html
+    # https://en.wikipedia.org/wiki/Ancient_Greek_grammar#Alphabet
+    if pos == "PUNCT":  # token in "·,;."
+        # https://library.biblicalarchaeology.org/article/punctuationinthenewtestament/
+        # https://en.wikipedia.org/wiki/Scriptio_continua
+        if scripta_continua:
+            return ""
+        else:
+            return token
+    else:
+        if previous is None or previous == "\n" or scripta_continua:
+            return token
+        else:
+            return " " + token

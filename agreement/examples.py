@@ -2,11 +2,11 @@ from rich.console import Console
 
 from agreement.bible_api import get_chapter
 from agreement.config import get_report_path
-from agreement.synopsis import Synopsis
+from agreement.synopsis_table import SynopsisTable
 
 
 def main():
-    synopsis = Synopsis(
+    synopsis = SynopsisTable(
         "291 False Christs and False Prophets",
         left_passage="Mark 13:21-23",
         right_passage="Matt. 24:23-25",
@@ -20,7 +20,7 @@ def main():
     svg_path = get_report_path("291-Mark+Matt.svg")
     console.save_svg(svg_path)
 
-    synopsis = Synopsis(
+    synopsis = SynopsisTable(
         "14 John's Preaching of Repentance",
         left_passage="Matt. 3:7-10",
         right_passage="Luke 3:7-9",
@@ -37,7 +37,7 @@ def main():
     html_path = get_report_path("014-Matt+Luke.html")
     console.save_html(html_path)
 
-    synopsis = Synopsis(
+    synopsis = SynopsisTable(
         "68 On Judging (Log and Speck)",
         left_passage="Matt. 7:3-5",
         right_passage="Luke 6:41-43",

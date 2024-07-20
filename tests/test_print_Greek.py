@@ -1,21 +1,5 @@
 # https://en.wikipedia.org/wiki/Greek_orthography#In_printing
-def print_Greek_token(token, pos, previous, scripta_continua=False):
-    # https://www.billmounce.com/greekalphabet/greek-punctuation-syllabification
-    # https://blog.greek-language.com/2022/02/14/punctuation-in-ancient-greek-texts-part-i/
-    # https://www.opoudjis.net/unicode/punctuation.html
-    # https://en.wikipedia.org/wiki/Ancient_Greek_grammar#Alphabet
-    if pos == "PUNCT":  # token in "·,;."
-        # https://library.biblicalarchaeology.org/article/punctuationinthenewtestament/
-        # https://en.wikipedia.org/wiki/Scriptio_continua
-        if scripta_continua:
-            return ""
-        else:
-            return token
-    else:
-        if previous is None or previous == "\n" or scripta_continua:
-            return token
-        else:
-            return " " + token
+from agreement.synopsis_table import print_Greek_token
 
 
 def test_print_scripta_continua():
