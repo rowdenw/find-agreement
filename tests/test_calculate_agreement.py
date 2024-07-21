@@ -1,13 +1,13 @@
 from agreement.agreement import match_sequences
 from agreement.agreement import calculate_agreement
-from agreement.agreement import calculate_agreement_type
-from agreement.passage import GreekPassage
+from agreement.agreement import calculate_agreement_types
+from agreement.greek_text import GreekText
 from tests import config
 
 
 def test_calculate_agreement_014():
-    passageA = GreekPassage(config.grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_3_7_10())
-    passageB = GreekPassage(config.grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_3_7_9())
+    passageA = GreekText(config.grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_3_7_10())
+    passageB = GreekText(config.grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_3_7_9())
     assert len(passageA.clean) == 78
     assert len(passageB.clean) == 72
     (agreement, a_matches_b, b_matches_a) = match_sequences(
@@ -22,9 +22,9 @@ def test_calculate_agreement_014():
 
 def test_calculate_agreement_128():
     passages = [
-        GreekPassage(config.grc_byz1904_ΚΑΤΑ_ΜΑΡΚΟΝ_4_30),
-        GreekPassage(config.grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_13_31),
-        GreekPassage(config.grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_13_18_19),
+        GreekText(config.grc_byz1904_ΚΑΤΑ_ΜΑΡΚΟΝ_4_30),
+        GreekText(config.grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_13_31),
+        GreekText(config.grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_13_18_19),
     ]
     assert len(passages[0].tokens) == 17  # words plus punctuation
     assert len(passages[0].clean) == 14  # words
@@ -64,12 +64,12 @@ def test_calculate_agreement_128():
 
 
 def test_calculate_agreement_type_128():
-    passages = [
-        GreekPassage(config.grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_13_31),
-        GreekPassage(config.grc_byz1904_ΚΑΤΑ_ΜΑΡΚΟΝ_4_30),
-        GreekPassage(config.grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_13_18_19),
+    texts = [
+        GreekText(config.grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_13_31),
+        GreekText(config.grc_byz1904_ΚΑΤΑ_ΜΑΡΚΟΝ_4_30),
+        GreekText(config.grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_13_18_19),
     ]
-    agreement_type = calculate_agreement_type(passages)
+    agreement_type = calculate_agreement_types(texts)
     assert agreement_type[0] == [1, 1, 1, 1, 7, 0, 5, 5, 7, 7, 7, 1, 1, 1, 0,
                                  1, 1, 1, 1, 3, 1, 1, 7, 0]
     assert agreement_type[1] == [2, 7, 0, 2, 2, 7, 7, 7, 6, 0, 2, 3, 6, 2, 2,

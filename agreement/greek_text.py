@@ -14,7 +14,7 @@ from cltk import NLP
 NLP = NLP(language="grc", suppress_banner=True)
 
 
-class GreekPassage:
+class GreekText:
     """
     NLP analysis of a passage of Greek text
 

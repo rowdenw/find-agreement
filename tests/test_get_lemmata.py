@@ -1,9 +1,9 @@
-from agreement.passage import GreekPassage
+from agreement.greek_text import GreekText
 import tests.config as config
 
 
 def test_lemmatize_Mark_13_21():
-    greekPassage = GreekPassage(config.grc_byz1904_ΚΑΤΑ_ΜΑΡΚΟΝ_13_21)
+    greekPassage = GreekText(config.grc_byz1904_ΚΑΤΑ_ΜΑΡΚΟΝ_13_21)
     assert greekPassage.lemmata == [
         "καί",
         "τότε",
@@ -27,7 +27,7 @@ def test_lemmatize_Mark_13_21():
 
 
 def test_lemmatize_Matt_24_23():
-    greekPassage = GreekPassage(config.grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_24_23)
+    greekPassage = GreekText(config.grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_24_23)
     assert greekPassage.lemmata == [
         "τότε",
         "ἐάν",

@@ -1,13 +1,13 @@
 from agreement.agreement import get_n_gram_Jaccard_index
-from agreement.passage import GreekPassage
+from agreement.greek_text import GreekText
 from tests.config import grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_24_23
 from tests.config import grc_byz1904_ΚΑΤΑ_ΜΑΡΚΟΝ_13_21
 
 
 def test_answer():
 
-    passageA = GreekPassage(grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_24_23)
-    passageB = GreekPassage(grc_byz1904_ΚΑΤΑ_ΜΑΡΚΟΝ_13_21)
+    passageA = GreekText(grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_24_23)
+    passageB = GreekText(grc_byz1904_ΚΑΤΑ_ΜΑΡΚΟΝ_13_21)
     # TODO: Move these ranges into a test for clean.
     sequence_a = (
         list(range(0, 5))  # τότε ἐάν τις ὑμῖν εἴπῃ

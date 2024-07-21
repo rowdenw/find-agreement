@@ -76,28 +76,28 @@ def calculate_agreement(passages):
     return agreements, matches
 
 
-def calculate_agreement_type(passages):
-    agreements, matches = calculate_agreement(passages)
-    agreement_type = []
-    for column in range(len(passages)):
-        agreement_type.append(
+def calculate_agreement_types(texts):
+    agreements, matches = calculate_agreement(texts)
+    agreement_types = []
+    for column in range(len(texts)):
+        agreement_types.append(
             [
-                2**column if j in passages[column].clean else 0
-                for j in range(len(passages[column].tokens))
+                2**column if j in texts[column].clean else 0
+                for j in range(len(texts[column].tokens))
                 ]
                 )
-    for left in range(len(agreement_type)):
-        for right in range(left+1, len(agreement_type)):
-            agreement_type[left] = [
-                agreement_type[left][position] + 2**right
+    for left in range(len(agreement_types)):
+        for right in range(left+1, len(agreement_types)):
+            agreement_types[left] = [
+                agreement_types[left][position] + 2**right
                 if position in matches[left][right]
-                else agreement_type[left][position]
-                for position in range(len(agreement_type[left]))
+                else agreement_types[left][position]
+                for position in range(len(agreement_types[left]))
             ]
-            agreement_type[right] = [
-                agreement_type[right][position] + 2**left
+            agreement_types[right] = [
+                agreement_types[right][position] + 2**left
                 if position in matches[right][left]
-                else agreement_type[right][position]
-                for position in range(len(agreement_type[right]))
+                else agreement_types[right][position]
+                for position in range(len(agreement_types[right]))
             ]
-    return agreement_type
+    return agreement_types

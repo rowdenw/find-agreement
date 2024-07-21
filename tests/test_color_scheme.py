@@ -1,8 +1,8 @@
 from agreement.color_scheme import ColorScheme
 from agreement.color_scheme import GoodacreColorScheme
-from agreement.passage import GreekPassage
+from agreement.greek_text import GreekText
 from agreement.color_scheme import get_agreement_type
-from agreement.synopsis_table import get_color_text
+from agreement.synoptic_table import get_color_text
 from tests import config
 from tests.config import grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_13_18_19
 
@@ -53,7 +53,7 @@ def test_color_Matt_13_31():
     # https://en.wikipedia.org/wiki/Synoptic_Gospels#Double_tradition
     colorScheme.set_color(get_agreement_type([column_Matthew, column_Luke]),
                           "orange")
-    passage = GreekPassage(config.grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_13_31)
+    passage = GreekText(config.grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_13_31)
     pos = passage.pos
     tokens = passage.tokens
     row = get_color_text(colorScheme, zip(pos, tokens,
@@ -74,7 +74,7 @@ def test_color_Mark_4_30_32():
     # http://www.hypotyposeis.org/synoptic-problem/2004/10/johns-imprisonment.html
     colorScheme = ColorScheme(None, "blue", "red", "purple",
                               "green", None, None, "black on white")
-    passage = GreekPassage(config.grc_byz1904_ΚΑΤΑ_ΜΑΡΚΟΝ_4_30)
+    passage = GreekText(config.grc_byz1904_ΚΑΤΑ_ΜΑΡΚΟΝ_4_30)
     pos = passage.pos
     tokens = passage.tokens
     assert (
@@ -95,7 +95,7 @@ def test_color_Luke_13_18():
     column_Mark = 1
     column_Luke = 2
     colorScheme = GoodacreColorScheme(column_Matthew, column_Mark, column_Luke)
-    passage = GreekPassage(grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_13_18_19)
+    passage = GreekText(grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_13_18_19)
     pos = passage.pos
     tokens = passage.tokens
     assert get_color_text(colorScheme, zip(pos, tokens,

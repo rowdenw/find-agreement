@@ -1,5 +1,5 @@
 # https://en.wikipedia.org/wiki/Greek_orthography#In_printing
-from agreement.synopsis_table import print_Greek_token
+from agreement.synoptic_table import print_Greek_token
 
 
 def test_print_scripta_continua():

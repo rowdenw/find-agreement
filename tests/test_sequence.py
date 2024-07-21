@@ -1,5 +1,5 @@
 from agreement.agreement import match_sequences
-from agreement.passage import GreekPassage
+from agreement.greek_text import GreekText
 import tests.config as config
 
 
@@ -33,8 +33,8 @@ def grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_3_7_9_sequence():
 
 
 def test_match_sequences():
-    passageA = GreekPassage(config.grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_3_7_10())
-    passageB = GreekPassage(config.grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_3_7_9())
+    passageA = GreekText(config.grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_3_7_10())
+    passageB = GreekText(config.grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_3_7_9())
     (agreement, a_matches_b, b_matches_a) = match_sequences(
         passageA.lemmata, passageA.clean, passageB.lemmata, passageB.clean
     )
@@ -59,10 +59,10 @@ def test_match_sequences():
 
 
 def test_Matt_3_7_10_sequence():
-    greekPassage = GreekPassage(config.grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_3_7_10())
+    greekPassage = GreekText(config.grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_3_7_10())
     assert greekPassage.clean == grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_3_7_10_sequence()
 
 
 def test_Luke_3_7_9_sequence():
-    greekPassage = GreekPassage(config.grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_3_7_9())
+    greekPassage = GreekText(config.grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_3_7_9())
     assert greekPassage.clean == grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_3_7_9_sequence()
