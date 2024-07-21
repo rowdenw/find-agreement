@@ -1,6 +1,7 @@
 from rich.console import Console
 
 from agreement.bible_api import get_chapter
+from agreement.color_scheme import ColorScheme
 from agreement.config import get_report_path
 from agreement.synopsis_table import SynopsisTable
 
@@ -22,6 +23,7 @@ def main():
 
     synopsis = SynopsisTable(
         "14 John's Preaching of Repentance",
+        color_scheme=ColorScheme(None, "blue", "yellow", "green"),
         left_passage="Matt. 3:7-10",
         right_passage="Luke 3:7-9",
         left_text=get_chapter("grc-byz1904", "καταματθαιον", 3, 7, 10),

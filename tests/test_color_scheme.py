@@ -1,11 +1,10 @@
-import rich
 from agreement.color_scheme import ColorScheme
 from agreement.color_scheme import GoodacreColorScheme
 from agreement.passage import GreekPassage
 from agreement.color_scheme import get_agreement_type
+from agreement.synopsis_table import get_color_text
 from tests import config
 from tests.config import grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_13_18_19
-from agreement.synopsis_table import print_Greek_token
 
 
 def test_agreement_type():
@@ -24,17 +23,6 @@ def test_color_scheme():
     assert colorScheme.get_color(3) == "yellow"
     colorScheme.set_color(get_agreement_type([1, 2]), "green")
     assert colorScheme.get_color(6) == "green"
-
-
-def get_color_text(colorScheme, token_agreement):
-    prev = None
-    text = rich.text.Text()
-    for pos, token, type in token_agreement:
-        to_print = print_Greek_token(token, pos, prev)
-        style = colorScheme.get_color(type)
-        text.append(to_print, style=style)
-        prev = token
-    return text.markup
 
 
 agreement_type_Matt_13_31 = [1, 1, 1, 1, 7, 0, 5, 5, 7, 7, 7, 1, 1, 1, 0, 1,

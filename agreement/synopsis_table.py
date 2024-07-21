@@ -1,6 +1,10 @@
+import rich
 from rich.table import Table
 
-from agreement.agreement import get_n_gram_Jaccard_index, match_sequences
+from agreement.agreement import calculate_agreement_type
+from agreement.agreement import get_n_gram_Jaccard_index
+from agreement.agreement import match_sequences
+from agreement.color_scheme import ColorScheme
 from agreement.passage import GreekPassage
 
 
@@ -15,48 +19,29 @@ class SynopsisTable:
         suitable for printing to console or SVG
     """
 
-    def __init__(self, title, **kwargs):
+    def __init__(self, title, color_scheme=ColorScheme(None, None, None,
+                                                       "yellow"), **kwargs):
         self.table = Table(show_footer=True)
         self.table.title = title
         if kwargs.get("left_passage"):
             self.table.add_column(kwargs["left_passage"])
-            if kwargs.get("left_column"):
-                left_column = kwargs.get("left_column")
-            else:
-                left_column = ""
         if kwargs.get("right_passage"):
             self.table.add_column(kwargs["right_passage"])
-            if kwargs.get("right_column"):
-                right_column = kwargs.get("right_column")
-            else:
-                right_column = ""
         if kwargs.get("left_text") and kwargs.get("right_text"):
-            if kwargs.get("agreement"):
-                highlight = kwargs["agreement"]
-            else:
-                highlight = "yellow"
             passageA = GreekPassage(kwargs.get("left_text"))
             passageB = GreekPassage(kwargs.get("right_text"))
             (agreement, a_matches_b, b_matches_a) = match_sequences(
                 passageA.lemmata, passageA.clean,
                 passageB.lemmata, passageB.clean
             )
-            self.table.add_row(
-                get_highlight(
-                    a_matches_b,
-                    passageA.pos,
-                    passageA.tokens,
-                    agreement=highlight,
-                    column=left_column,
-                ),
-                get_highlight(
-                    b_matches_a,
-                    passageB.pos,
-                    passageB.tokens,
-                    agreement=highlight,
-                    column=right_column,
-                ),
-            )
+            agreement_type = calculate_agreement_type([passageA, passageB])
+            textA = get_color_text(color_scheme,
+                                   zip(passageA.pos, passageA.tokens,
+                                       agreement_type[0]))
+            textB = get_color_text(color_scheme,
+                                   zip(passageB.pos, passageB.tokens,
+                                       agreement_type[1]))
+            self.table.add_row(textA, textB)
             words_a = str(len(passageA.clean))
             words_b = str(len(passageB.clean))
             self.table.add_row(
@@ -103,51 +88,6 @@ class SynopsisTable:
         return self.table
 
 
-def get_highlight(matches, pos, tokens, agreement="yellow", column=""):
-    if len(column) > 0:
-        column_start = "[" + column + "]"
-        column_stop = "[/" + column + "]"
-    else:
-        column_start = ""
-        column_stop = ""
-    prev_match = False
-    span_start = "[" + agreement + "]"
-    span_stop = "[/" + agreement + "]"
-    start_of_line = True
-    text = ""
-    for i, token in enumerate(tokens):
-        current_match = i in matches
-        if current_match and not prev_match:
-            if i > 0:
-                text += column_stop
-            text += get_spacing(pos[i],
-                                start_of_line, token) + span_start + token
-        elif not current_match and prev_match:
-            text += span_stop
-            text += get_spacing(pos[i],
-                                start_of_line, token) + column_start + token
-        else:
-            if i == 0:
-                text = column_start
-            else:
-                text += get_spacing(pos[i], start_of_line, token)
-            text += token
-        prev_match = current_match
-        start_of_line = token == "\n"
-    if current_match:
-        text += span_stop
-    else:
-        text += column_stop
-    return text
-
-
-def get_spacing(pos, start_of_line, token):
-    if pos != "PUNCT" and not start_of_line and not token == "\n":
-        return " "
-    else:
-        return ""
-
-
 def print_Greek_token(token, pos, previous, scripta_continua=False):
     # https://www.billmounce.com/greekalphabet/greek-punctuation-syllabification
     # https://blog.greek-language.com/2022/02/14/punctuation-in-ancient-greek-texts-part-i/
@@ -165,3 +105,14 @@ def print_Greek_token(token, pos, previous, scripta_continua=False):
             return token
         else:
             return " " + token
+
+
+def get_color_text(colorScheme, token_agreement):
+    prev = None
+    text = rich.text.Text()
+    for pos, token, type in token_agreement:
+        to_print = print_Greek_token(token, pos, prev)
+        style = colorScheme.get_color(type)
+        text.append(to_print, style=style)
+        prev = token
+    return text.markup
