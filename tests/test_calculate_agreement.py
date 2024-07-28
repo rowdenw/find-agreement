@@ -1,4 +1,4 @@
-from agreement.agreement import match_sequences
+from agreement.agreement import LCSAgreementFinder
 from agreement.agreement import calculate_agreement
 from agreement.agreement import calculate_agreement_types
 from agreement.greek_text import GreekText
@@ -10,7 +10,8 @@ def test_calculate_agreement_014():
     passageB = GreekText(config.grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_3_7_9())
     assert len(passageA.clean) == 78
     assert len(passageB.clean) == 72
-    (agreement, a_matches_b, b_matches_a) = match_sequences(
+    agreementFinder = LCSAgreementFinder()
+    (agreement, a_matches_b, b_matches_a) = agreementFinder.agreement(
         passageA.lemmata, passageA.clean, passageB.lemmata, passageB.clean
     )
     assert max(agreement.keys()) == 45

@@ -1,4 +1,4 @@
-from agreement.agreement import match_sequences
+from agreement.agreement import LCSAgreementFinder
 from agreement.greek_text import GreekText
 import tests.config as config
 
@@ -35,7 +35,8 @@ def grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_3_7_9_sequence():
 def test_match_sequences():
     passageA = GreekText(config.grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_3_7_10())
     passageB = GreekText(config.grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_3_7_9())
-    (agreement, a_matches_b, b_matches_a) = match_sequences(
+    agreementFinder = LCSAgreementFinder()
+    (agreement, a_matches_b, b_matches_a) = agreementFinder.agreement(
         passageA.lemmata, passageA.clean, passageB.lemmata, passageB.clean
     )
     assert a_matches_b[0:23] == (

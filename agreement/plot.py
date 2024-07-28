@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-from agreement.agreement import match_sequences
+from agreement.agreement import LCSAgreementFinder
 from agreement.bible_api import get_chapter
 from agreement.config import get_report_path
 from agreement.greek_text import GreekText
@@ -11,7 +11,8 @@ def main():
                                      13, 21, 23))
     passageB = GreekText(get_chapter("grc-byz1904", "καταματθαιον",
                                      24, 23, 25))
-    (agreement, a_matches_b, b_matches_a) = match_sequences(
+    agreementFinder = LCSAgreementFinder()
+    (agreement, a_matches_b, b_matches_a) = agreementFinder.agreement(
         passageA.lemmata, passageA.clean,
         passageB.lemmata, passageB.clean
         )
