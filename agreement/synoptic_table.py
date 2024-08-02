@@ -127,11 +127,6 @@ def get_colorized_text_for_tokens(colorScheme: ColorScheme, token_agreement: Lis
         ὁμοία[orange][/orange] ἐστὶν[brown][/orange] ἡ[brown][/brown] βασιλεία[brown][/brown]
         τοῦ[green][/brown] Θεοῦ[/green],[yellow] καὶ[green][/yellow] τίνι[yellow][/green]
         ὁμοιώσω[brown][/yellow] αὐτήν[/brown];"
-
-    See Also
-    --------
-    Synopsis.getData : individual analysis results that are transposed for
-    the table
     """
     prev = None
     text = rich.text.Text()
