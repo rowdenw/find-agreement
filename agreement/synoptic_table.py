@@ -1,9 +1,13 @@
 import rich
 from rich.table import Table
+from collections import namedtuple
+from typing import List
 
 from agreement.agreement import calculate_agreement_types
 from agreement.color_scheme import ColorScheme
 from agreement.greek_text import GreekText
+
+Parallel = namedtuple('Parallel', ['title', 'text', 'footer'])
 
 
 class SynopticTable:
@@ -17,28 +21,43 @@ class SynopticTable:
         suitable for printing to console or SVG
     """
 
-    def __init__(self, title, parallels,
+    def __init__(self, title, parallels: List[Parallel],
                  color_scheme=ColorScheme(None, None, None, "yellow")):
-        self.table = Table(show_footer=True)
+        self.parallels = parallels
+        self._table = Table(show_footer=True)
         self.table.title = title
-        passages, texts = list(zip(*parallels))
-        greekTexts = []
-        for text in texts:
-            greekTexts.append(GreekText(text))
-        agreement_types = calculate_agreement_types(greekTexts)
-        cells = []
-        descriptions = []
-        for index, agreement_type in enumerate(agreement_types):
-            cells.append(get_color_text(color_scheme,
-                                        zip(greekTexts[index].pos,
-                                            greekTexts[index].tokens,
-                                            agreement_type)))
-            descriptions.append(str(len(greekTexts[index].clean)) + " words")
-        for index, passage in enumerate(passages):
+        self.color_scheme = color_scheme
+
+
+    def process_synopsis(self):
+        passage_titles = [passage.title for passage in self.parallels]
+        greek_texts = [GreekText(passage.text) for passage in self.parallels]
+        agreement_types = calculate_agreement_types(greek_texts)
+
+        cells = [
+            get_color_text(
+                self.color_scheme,
+                zip(
+                    greek_texts[index].pos, # part of speech
+                    greek_texts[index].tokens, # greek word
+                    agreement_type # numeric code for agreement type, which is translated to color
+                )
+            )
+            for index, agreement_type in enumerate(agreement_types)
+        ]
+
+        descriptions = [
+            f"{len(greek_texts[index].clean)} words"
+            for index in range(len(greek_texts))
+        ]
+
+        for index, passage in enumerate(passage_titles):
             self.table.add_column(header=passage, footer=descriptions[index])
+
         self.table.add_row(*cells)
 
-    def getTable(self):
+    @property
+    def table(self):
         """
         Get table showing text analysis.
 
@@ -53,7 +72,7 @@ class SynopticTable:
         Synopsis.getData : individual analysis results that are transposed for
         the table
         """
-        return self.table
+        return self._table
 
 
 def print_Greek_token(token, pos, previous, scripta_continua=False):

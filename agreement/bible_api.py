@@ -11,25 +11,27 @@ def percent_encode(link):
 
 
 def get_verse(version, book, chapter, verse):
-    endpoint = "\
-https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/${version}/books/${book}/chapters/${chapter}/verses/${verse}.json\
-"
-    endpoint = endpoint.replace("${version}", version)
-    endpoint = endpoint.replace("${book}", book)
-    endpoint = endpoint.replace("${chapter}", str(chapter))
-    endpoint = endpoint.replace("${verse}", str(verse))
+    endpoint = (
+        "https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles"
+        f"/{version}"
+        f"/books/{book}"
+        f"/chapters/{chapter}"
+        f"/verses/{verse}.json"
+    )
+
     with urllib.request.urlopen(percent_encode(endpoint)) as url:
         data = json.load(url)
     return data["text"]
 
 
 def get_chapter(version, book, chapter, start_verse, end_verse):
-    endpoint = "\
-https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/${version}/books/${book}/chapters/${chapter}.json\
-"
-    endpoint = endpoint.replace("${version}", version)
-    endpoint = endpoint.replace("${book}", book)
-    endpoint = endpoint.replace("${chapter}", str(chapter))
+    endpoint = (
+        "https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles"
+        f"/{version}"
+        f"/books/{book}"
+        f"/chapters/{chapter}.json"
+    )
+
     with urllib.request.urlopen(percent_encode(endpoint)) as url:
         data = json.load(url)
     df = pd.json_normalize(data["data"])

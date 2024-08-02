@@ -3,87 +3,75 @@ from rich.console import Console
 from agreement.bible_api import get_chapter
 from agreement.color_scheme import ColorScheme, GoodacreColorScheme
 from agreement.config import get_report_path
-from agreement.synoptic_table import SynopticTable
+from agreement.synoptic_table import SynopticTable, Parallel
 import tests.config
 
+def run_example(table_title, passages, report_filename, **kwargs):
+    synoptic_table = SynopticTable(
+        table_title, passages,
+        **kwargs
+    )
+
+    synoptic_table.process_synopsis()
+    table = synoptic_table.table
+    print(table)
+    console = Console(record=True)
+    console.print(table)
+    html_path = get_report_path(report_filename)
+    console.save_html(html_path)
 
 def main():
-    synopticTable = SynopticTable(
+    run_example(
         "14 John's Preaching of Repentance",
         [
-            ["Matt. 3:7-10",
-             get_chapter("grc-byz1904", "καταματθαιον", 3, 7, 10)],
-            ["Luke 3:7-9", get_chapter("grc-byz1904", "καταλουκαν", 3, 7, 9)],
+            Parallel(title="Matt. 3:7-10", text=get_chapter("grc-byz1904", "καταματθαιον", 3, 7, 10), footer=""),
+            Parallel(title="Luke 3:7-9", text=get_chapter("grc-byz1904", "καταλουκαν", 3, 7, 9), footer="")
         ],
-        color_scheme=ColorScheme(None, "blue", "yellow", "green"),
-    )
-    table = synopticTable.table
-    console = Console(record=True)
-    console.print(table)
-    html_path = get_report_path("014-Matt+Luke.html")
-    console.save_html(html_path)
+        "014-Matt+Luke.html",
+        color_scheme = ColorScheme(None, "blue", "yellow", "green")
 
-    synopticTable = SynopticTable(
+    )
+
+
+    run_example(
         "68 On Judging (Log and Speck)",
         [
-            ["Matt. 7:3-5",
-             get_chapter("grc-byz1904", "καταματθαιον", 7, 3, 5)],
-            ["Luke 6:41-43",
-             get_chapter("grc-byz1904", "καταλουκαν", 6, 41, 43)],
+            Parallel(title="Matt. 7:3-5", text=get_chapter("grc-byz1904", "καταματθαιον", 7, 3, 5), footer=""),
+            Parallel(title="Luke 6:41-43", text=get_chapter("grc-byz1904", "καταλουκαν", 6, 41, 43), footer="")
         ],
+        "068-Matt+Luke.html"
     )
-    table = synopticTable.table
-    console = Console(record=True)
-    console.print(table)
-    html_path = get_report_path("068-Matt+Luke.html")
-    console.save_html(html_path)
 
-    synopticTable = SynopticTable(
+    run_example(
         "128 The Parable of the Mustard Seed (First Verse)",
         [
-            ["Mark 4:30", tests.config.grc_byz1904_ΚΑΤΑ_ΜΑΡΚΟΝ_4_30],
-            ["Matt. 13:31", tests.config.grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_13_31],
-            ["Luke 13:18-19", tests.config.grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_13_18_19],
+            Parallel(title="Mark 4:30", text=tests.config.grc_byz1904_ΚΑΤΑ_ΜΑΡΚΟΝ_4_30, footer=""),
+            Parallel(title="Matt. 13:31", text=tests.config.grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_13_31, footer=""),
+            Parallel(title="Luke 13:18-19", text=tests.config.grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_13_18_19, footer="")
         ],
-        color_scheme=ColorScheme(None, None, None, "yellow",
-                                 None, None, "green"),
+        "128-Mark+Matt+Luke.html",
+        color_scheme = ColorScheme(None, None, None, "yellow", None, None, "green")
     )
-    table = synopticTable.table
-    console = Console(record=True)
-    console.print(table)
-    html_path = get_report_path("128-Mark+Matt+Luke.html")
-    console.save_html(html_path)
 
-    synopticTable = SynopticTable(
+    run_example(
         "128 The Parable of the Mustard Seed (First Verse)",
         [
-            ["Matt. 13:31", tests.config.grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_13_31],
-            ["Mark 4:30", tests.config.grc_byz1904_ΚΑΤΑ_ΜΑΡΚΟΝ_4_30],
-            ["Luke 13:18-19", tests.config.grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_13_18_19],
+            Parallel(title="Matt. 13:31", text=tests.config.grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_13_31, footer=""),
+            Parallel(title="Mark 4:30", text=tests.config.grc_byz1904_ΚΑΤΑ_ΜΑΡΚΟΝ_4_30, footer=""),
+            Parallel(title="Luke 13:18-19", text=tests.config.grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_13_18_19, footer="")
         ],
-        color_scheme=GoodacreColorScheme(0, 1, 2)
+        "128-Matt+Mark+Luke.html",
+        color_scheme = GoodacreColorScheme(0, 1, 2)
     )
-    table = synopticTable.table
-    console = Console(record=True)
-    console.print(table)
-    html_path = get_report_path("128-Matt+Mark+Luke.html")
-    console.save_html(html_path)
 
-    synopticTable = SynopticTable(
+    run_example(
         "291 False Christs and False Prophets",
         [
-            ["Mark 13:21-23",
-             get_chapter("grc-byz1904", "καταμαρκον", 13, 21, 23)],
-            ["Matt. 24:23-25",
-             get_chapter("grc-byz1904", "καταματθαιον", 24, 23, 25)],
-        ],
+            Parallel(title="Mark 13:21-23", text=get_chapter("grc-byz1904", "καταμαρκον", 13, 21, 23), footer=""),
+            Parallel(title="Matt. 24:23-25", text=get_chapter("grc-byz1904", "καταματθαιον", 24, 23, 25), footer="")
+         ],
+        "291-Mark+Matt.svg"
     )
-    table = synopticTable.table
-    console = Console(record=True)
-    console.print(table)
-    svg_path = get_report_path("291-Mark+Matt.svg")
-    console.save_svg(svg_path)
-
 
 if __name__ == "__main__":
     main()
