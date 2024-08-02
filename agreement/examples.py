@@ -14,7 +14,6 @@ def run_example(table_title, passages, report_filename, **kwargs):
 
     synoptic_table.process_synopsis()
     table = synoptic_table.table
-    print(table)
     console = Console(record=True)
     console.print(table)
     html_path = get_report_path(report_filename)
@@ -31,7 +30,6 @@ def main():
         color_scheme = ColorScheme(None, "blue", "yellow", "green")
 
     )
-
 
     run_example(
         "68 On Judging (Log and Speck)",
