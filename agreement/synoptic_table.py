@@ -1,10 +1,23 @@
 import rich
 from rich.table import Table
+from collections import namedtuple
+from typing import List
 
 from agreement.agreement import calculate_agreement_types
 from agreement.color_scheme import ColorScheme
 from agreement.greek_text import GreekText
 
+Parallel = namedtuple('Parallel', [
+    'title', # Title of a column in an agreement table
+    'text', # Body text for one column in agreement table
+    'footer' # Footer text for column showing count of matching words
+])
+
+TokenAgreement = namedtuple('TokenAgreement', [
+    'pos', # part of speech
+    'token', # greek word
+    'agreement_type' # numeric code for agreement type, which is translated to color
+])
 
 class SynopticTable:
     """
@@ -17,28 +30,43 @@ class SynopticTable:
         suitable for printing to console or SVG
     """
 
-    def __init__(self, title, parallels,
+    def __init__(self, title, parallels: List[Parallel],
                  color_scheme=ColorScheme(None, None, None, "yellow")):
-        self.table = Table(show_footer=True)
+        self.parallels = parallels
+        self._table = Table(show_footer=True)
         self.table.title = title
-        passages, texts = list(zip(*parallels))
-        greekTexts = []
-        for text in texts:
-            greekTexts.append(GreekText(text))
-        agreement_types = calculate_agreement_types(greekTexts)
-        cells = []
-        descriptions = []
-        for index, agreement_type in enumerate(agreement_types):
-            cells.append(get_color_text(color_scheme,
-                                        zip(greekTexts[index].pos,
-                                            greekTexts[index].tokens,
-                                            agreement_type)))
-            descriptions.append(str(len(greekTexts[index].clean)) + " words")
-        for index, passage in enumerate(passages):
+        self.color_scheme = color_scheme
+
+
+    def process_synopsis(self):
+        passage_titles = [passage.title for passage in self.parallels]
+        greek_texts = [GreekText(passage.text) for passage in self.parallels]
+        agreement_types = calculate_agreement_types(greek_texts)
+
+        cells = [
+            get_colorized_text_for_tokens(
+                self.color_scheme,
+                [TokenAgreement(*t) for t in zip(
+                    greek_texts[index].pos, # part of speech
+                    greek_texts[index].tokens, # greek word
+                    agreement_type # numeric code for agreement type, which is translated to color
+                )]
+            )
+            for index, agreement_type in enumerate(agreement_types)
+        ]
+
+        descriptions = [
+            f"{len(greek_texts[index].clean)} words"
+            for index in range(len(greek_texts))
+        ]
+
+        for index, passage in enumerate(passage_titles):
             self.table.add_column(header=passage, footer=descriptions[index])
+
         self.table.add_row(*cells)
 
-    def getTable(self):
+    @property
+    def table(self):
         """
         Get table showing text analysis.
 
@@ -53,7 +81,7 @@ class SynopticTable:
         Synopsis.getData : individual analysis results that are transposed for
         the table
         """
-        return self.table
+        return self._table
 
 
 def print_Greek_token(token, pos, previous, scripta_continua=False):
@@ -75,12 +103,36 @@ def print_Greek_token(token, pos, previous, scripta_continua=False):
             return " " + token
 
 
-def get_color_text(colorScheme, token_agreement):
+def get_colorized_text_for_tokens(colorScheme: ColorScheme, token_agreement: List[TokenAgreement]) -> str:
+    """
+    Get a string of text marked up with colors showing agreement type, for a 
+    single column of an agreements table.
+
+    Parameters:
+    -----------
+    colorScheme (ColorScheme): Maps agreement type code to display color.
+    token_agreement (List[TokenAgreement]): List of tuples, each of which
+        has a part of speech (pos), a text token, and the encoded agreement
+        type for that token in that column.
+
+    Returns:
+    --------
+    str:
+        A string of (Greek) text, interspersed with Rich markup giving each
+        word a color indicating the type of agreement. This string becomes
+        the content of a cell in an agreement table.
+
+        Example output:
+        '[brown]Ἔλεγε[yellow][/brown] δέ[/yellow]·[yellow] τίνι[orange][/yellow]
+        ὁμοία[orange][/orange] ἐστὶν[brown][/orange] ἡ[brown][/brown] βασιλεία[brown][/brown]
+        τοῦ[green][/brown] Θεοῦ[/green],[yellow] καὶ[green][/yellow] τίνι[yellow][/green]
+        ὁμοιώσω[brown][/yellow] αὐτήν[/brown];"
+    """
     prev = None
     text = rich.text.Text()
-    for pos, token, type in token_agreement:
+    for pos, token, agreement_type in token_agreement:
         to_print = print_Greek_token(token, pos, prev)
-        style = colorScheme.get_color(type)
+        style = colorScheme.get_color(agreement_type)
         text.append(to_print, style=style)
         prev = token
     return text.markup
