@@ -1,5 +1,7 @@
 import difflib
+from typing import List, Tuple, Dict
 
+from agreement.greek_text import GreekText
 from agreement.find_agreement import AgreementFinder
 
 
@@ -7,12 +9,12 @@ class LCSAgreementFinder(AgreementFinder):
     def __init__(self):
         super().__init__()
 
-    def agreement(self, lemmata_a, sequence_a, lemmata_b, sequence_b):
-        agreement = {}
+    def agreement(self, lemmata_a, sequence_a, lemmata_b, sequence_b) -> Tuple:
+        agreement: Dict = {}
         match_a = [lemmata_a[i] for i in sequence_a]
         match_b = [lemmata_b[i] for i in sequence_b]
-        sequence_a_matches_b = []
-        sequence_b_matches_a = []
+        sequence_a_matches_b: List = []
+        sequence_b_matches_a: List = []
         prev = difflib.Match(0, 0, 0)
         matcher = difflib.SequenceMatcher(a=match_a, b=match_b)
         for match in matcher.get_matching_blocks():
@@ -45,14 +47,15 @@ class LCSAgreementFinder(AgreementFinder):
         )
 
 
-def calculate_agreement(passages):
-    agreements = []
-    matches = [[[] for i in range(len(passages))]
-               for j in range(len(passages))]
+def calculate_agreement(passages: List[GreekText]) -> Tuple[List[Dict[int, int]], List[List[List[int]]]]:
+    agreements: List[Dict[int, int]] = []
+    num_passages = len(passages)
+    matches: List[List[List[int]]] = [[[] for _ in range(num_passages)]
+               for _ in range(num_passages)]
     agreementFinder = LCSAgreementFinder()
 
-    for left in range(len(passages)):
-        for right in range(left + 1, len(passages)):
+    for left in range(num_passages):
+        for right in range(left + 1, num_passages):
             (agreement,
              matches[left][right],
              matches[right][left]) = agreementFinder.agreement(passages[left].lemmata,
@@ -61,12 +64,13 @@ def calculate_agreement(passages):
                                                                passages[right].clean,
                                                                )
             agreements.append(agreement)
+
     return agreements, matches
 
 
-def calculate_agreement_types(texts):
-    agreements, matches = calculate_agreement(texts)
-    agreement_types = []
+def calculate_agreement_types(texts: List[GreekText]) -> List[List[int]]:
+    _, matches = calculate_agreement(texts)
+    agreement_types: List[List[int]] = []
     for column in range(len(texts)):
         agreement_types.append(
             [
@@ -88,4 +92,5 @@ def calculate_agreement_types(texts):
                 else agreement_types[right][position]
                 for position in range(len(agreement_types[right]))
             ]
+
     return agreement_types

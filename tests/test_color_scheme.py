@@ -2,7 +2,7 @@ from agreement.color_scheme import ColorScheme
 from agreement.color_scheme import GoodacreColorScheme
 from agreement.greek_text import GreekText
 from agreement.color_scheme import get_agreement_type
-from agreement.synoptic_table import get_colorized_text_for_tokens, TokenAgreement
+from agreement.synoptic_table import get_colorized_text_for_tokens, TokenAgreementTuple
 from tests import config
 from tests.config import grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_13_18_19
 
@@ -58,7 +58,7 @@ def test_color_Matt_13_31():
     tokens = passage.tokens
     row = get_colorized_text_for_tokens(
         colorScheme,
-        [TokenAgreement(*t) for t in zip(pos, tokens, agreement_type_Matt_13_31)]
+        [TokenAgreementTuple(*t) for t in zip(pos, tokens, agreement_type_Matt_13_31)]
     )
     assert row == color_text
 
@@ -81,7 +81,7 @@ def test_color_Mark_4_30_32():
     tokens = passage.tokens
     row = get_colorized_text_for_tokens(
         colorScheme,
-        [TokenAgreement(*t) for t in zip(pos, tokens, agreement_type_Mark_4_30_32)]
+        [TokenAgreementTuple(*t) for t in zip(pos, tokens, agreement_type_Mark_4_30_32)]
     )
     assert row == color_text
 
@@ -102,6 +102,6 @@ def test_color_Luke_13_18():
     tokens = passage.tokens
     row = get_colorized_text_for_tokens(
         colorScheme,
-        [TokenAgreement(*t) for t in zip(pos, tokens, agreement_type_Luke_13_18)]
+        [TokenAgreementTuple(*t) for t in zip(pos, tokens, agreement_type_Luke_13_18)]
     )
     assert row == color_text

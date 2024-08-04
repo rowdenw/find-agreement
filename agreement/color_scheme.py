@@ -1,17 +1,17 @@
+from typing import List, Dict, Optional
+
 class ColorScheme:
-    def __init__(self, *colors):
-        self._color = {}
-        for index, color in enumerate(colors):
-            self._color[index] = color
+    def __init__(self, *colors: Optional[str]):
+        self._color_map: Dict[int, Optional[str]] = {index: colors[index] for index in range(len(colors))}
 
-    def get_color(self, type):
-        return self._color.get(type, '')
+    def get_color(self, type: int) -> Optional[str]:
+        return self._color_map.get(type, '')
 
-    def set_color(self, type, color):
-        self._color[type] = color
+    def set_color(self, type: int, color: str) -> None:
+        self._color_map[type] = color
 
 
-def GoodacreColorScheme(column_Matthew, column_Mark, column_Luke):
+def GoodacreColorScheme(column_Matthew: int, column_Mark: int, column_Luke: int) -> ColorScheme:
     colorScheme = ColorScheme()
     # https://markgoodacre.org/maze/synopses.htm
     colorScheme.set_color(get_agreement_type([column_Matthew]), "blue")
@@ -28,7 +28,7 @@ def GoodacreColorScheme(column_Matthew, column_Mark, column_Luke):
     return colorScheme
 
 
-def get_agreement_type(in_passage):
+def get_agreement_type(in_passage: List[int]) -> int:
     agreement_type = 0
     for passage in in_passage:
         agreement_type += 2**passage

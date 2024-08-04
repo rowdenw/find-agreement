@@ -2,6 +2,8 @@ from agreement.agreement import LCSAgreementFinder
 from agreement.agreement import calculate_agreement
 from agreement.agreement import calculate_agreement_types
 from agreement.greek_text import GreekText
+from typing import List
+
 from tests import config
 
 
@@ -65,12 +67,12 @@ def test_calculate_agreement_128():
 
 
 def test_calculate_agreement_type_128():
-    texts = [
+    texts: List[GreekText] = [
         GreekText(config.grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_13_31),
         GreekText(config.grc_byz1904_ΚΑΤΑ_ΜΑΡΚΟΝ_4_30),
         GreekText(config.grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_13_18_19),
     ]
-    agreement_type = calculate_agreement_types(texts)
+    agreement_type: List[List[int]] = calculate_agreement_types(texts)
     assert agreement_type[0] == [1, 1, 1, 1, 7, 0, 5, 5, 7, 7, 7, 1, 1, 1, 0,
                                  1, 1, 1, 1, 3, 1, 1, 7, 0]
     assert agreement_type[1] == [2, 7, 0, 2, 2, 7, 7, 7, 6, 0, 2, 3, 6, 2, 2,
