@@ -2,17 +2,13 @@ from typing import List, Dict, NamedTuple, KeysView, Optional
 
 class ColorScheme:
     def __init__(self, *colors: Optional[str]):
-        # self._color = {}
         self._color: Dict[int, Optional[str]] = {index: colors[index] for index in range(len(colors))}
-        # for index, color in enumerate(colors):
-        #     self._color[index] = color
 
     def get_color(self, type) -> Optional[str]:
         return self._color.get(type, '')
 
     def set_color(self, type, color) -> None:
         self._color[type] = color
-
 
 
 # List of allowed Rich colors here
@@ -37,24 +33,6 @@ class GoodacreColorScheme(ColorScheme):
         brown_name = "sienna" if use_CSS_colors else "brown"
         super().set_color(get_agreement_type([column_Matthew, column_Mark,
                                                 column_Luke]), brown_name)
-
-
-
-# def GoodacreColorScheme(column_Matthew, column_Mark, column_Luke):
-#     colorScheme = ColorScheme()
-#     # https://markgoodacre.org/maze/synopses.htm
-#     colorScheme.set_color(get_agreement_type([column_Matthew]), "blue")
-#     colorScheme.set_color(get_agreement_type([column_Mark]), "red")
-#     colorScheme.set_color(get_agreement_type([column_Luke]), "yellow")
-#     colorScheme.set_color(get_agreement_type([column_Matthew, column_Mark]),
-#                           "purple")
-#     colorScheme.set_color(get_agreement_type([column_Matthew, column_Luke]),
-#                           "green")
-#     colorScheme.set_color(get_agreement_type([column_Mark, column_Luke]),
-#                           "orange")
-#     colorScheme.set_color(get_agreement_type([column_Matthew, column_Mark,
-#                                               column_Luke]), "brown")
-#     return colorScheme
 
 
 def get_agreement_type(in_passage):

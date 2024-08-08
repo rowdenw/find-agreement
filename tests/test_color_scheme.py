@@ -64,32 +64,8 @@ def test_color_Matt_13_31():
     colorScheme.set_color(get_agreement_type([column_Matthew, column_Luke]),
                           "orange")
 
-    # Here we have a bit of a challenge, because this would be where, in 
-    # SynopticTableModel, we take all three columns of text, and
-    # compute the agreement types. The output of SynopticTableModel
-    # is a list of TokenAgreementTuples, each of which has 
-    # the token, part of speech, and agreement type for that token
-    #
-    # The GreekText class is the tokenized text, exposing two lists, 
-    # one "lemmata" (the lemmatized words), the other "clean", a list
-    # of indices into the tokens. If an index is in the list, then
-    # that token is an actual lemmatized word, not punctuation or newline
-    #
     passage = GreekText(config.grc_byz1904_ΚΑΤΑ_ΜΑΤΘΑΙΟΝ_13_31)
 
-    # Here we cheat a bit. passage (a GreekText) doesn't properly expose pos or tokens.
-    # Need to figure out if that's needed or not
-
-    # It looks like what we're doing here is first building the list of tuples that
-    # needs to be passed to get_colorized_text_for_tokens, bypassing the normal
-    # processing of agreement types. 
-    # I really don't think this belongs in this test, but we'll have to give it
-    # another look.
-    # pos = passage.pos  # the list of parts of speech
-    # tokens = passage.tokens  # the list of raw tokens
-    # token_agreements = [TokenAgreementTuple(*t) for t in zip(pos, tokens, agreement_type_Matt_13_31)]
-    # row = get_colorized_text_for_tokens(colorScheme, token_agreements)
-    # assert row == color_text
     assert_color_scheme(passage, agreement_type_Matt_13_31, colorScheme, color_text)
 
 

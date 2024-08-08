@@ -8,11 +8,6 @@ from agreement.color_scheme import ColorScheme
 from agreement.greek_text import GreekText
 from agreement.synoptic_table_model import SynopticTableModel, TokenAgreementTuple
 
-# TokenAgreement = namedtuple('TokenAgreement', [
-#     'pos', # part of speech
-#     'token', # greek word
-#     'agreement_type' # numeric code for agreement type, which is translated to color
-# ])
 
 class SynopticTableRichText:
     """
@@ -28,7 +23,7 @@ class SynopticTableRichText:
 
     def __init__(self, table_model: SynopticTableModel, color_scheme: Optional[ColorScheme]=None):
         self._table_model = table_model
-        # self._color_scheme = color_scheme
+
         self._color_scheme: Optional[ColorScheme]
         if (color_scheme == None):
                 self._color_scheme = self._default_color_scheme
@@ -36,11 +31,9 @@ class SynopticTableRichText:
                 self._color_scheme = color_scheme
         assert self._color_scheme is not None
 
-        # self.parallels = parallels
         self._parallels = table_model.parallels
 
         self._table = Table(show_footer=True)
-        # self.table.title = title
         self._table.title = table_model.table_title
         token_agreements = self._table_model.token_agreements
         cells = [
@@ -64,33 +57,6 @@ class SynopticTableRichText:
             )
 
         self._table.add_row(*cells)
-
-    # def process_synopsis(self):
-    #     passage_titles = [passage.title for passage in self.parallels]
-    #     agreement_types = calculate_agreement_types(greek_texts)
-    #     greek_texts = [GreekText(passage.text) for passage in self.parallels]
-
-    #     cells = [
-    #         get_colorized_text_for_tokens(
-    #             self._color_scheme,
-    #             [TokenAgreementTuple(*t) for t in zip(
-    #                 greek_texts[index].pos, # part of speech
-    #                 greek_texts[index].tokens, # greek word
-    #                 agreement_type # numeric code for agreement type, which is translated to color
-    #             )]
-    #         )
-    #         for index, agreement_type in enumerate(agreement_types)
-    #     ]
-
-    #     descriptions = [
-    #         f"{len(greek_texts[index].clean)} words"
-    #         for index in range(len(greek_texts))
-    #     ]
-
-    #     for index, passage in enumerate(passage_titles):
-    #         self.table.add_column(header=passage, footer=descriptions[index])
-
-    #     self.table.add_row(*cells)
 
     @property
     def table(self):

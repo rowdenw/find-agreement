@@ -26,14 +26,6 @@ def test_one_title_header():
 
     table = render_table(TABLE_TITLE, PASSAGES, FOOTERS)
     assert_table(table, TABLE_TITLE, PASSAGES, FOOTERS)
-    # synopsis = SynopticTable(TABLE_TITLE, PASSAGES)
-    # synopsis.process_synopsis()
-    # table = synopsis.table
-    # assert table.title == TABLE_TITLE
-    # for index in range(len(PASSAGES)):
-    #     assert table.columns[index].header == PASSAGES[index].title
-    #     assert table.columns[index].footer == PASSAGES[index].footer
-    # assert table.row_count == 1
 
 
 def test_two_title_header():
@@ -46,14 +38,7 @@ def test_two_title_header():
 
     table = render_table(TABLE_TITLE, PASSAGES, FOOTERS)
     assert_table(table, TABLE_TITLE, PASSAGES, FOOTERS)
-    # synopsis = SynopticTable(TABLE_TITLE, PASSAGES)
-    # synopsis.process_synopsis()
-    # table = synopsis.table
-    # assert table.title == TABLE_TITLE
-    # for index in range(len(PASSAGES)):
-    #     assert table.columns[index].header == PASSAGES[index].title
-    #     assert table.columns[index].footer == PASSAGES[index].footer
-    # assert table.row_count == 1
+
 
 def test_three_title_header():
     TABLE_TITLE = "128 The Parable of the Mustard Seed (First Verse)"
@@ -66,12 +51,3 @@ def test_three_title_header():
 
     table = render_table(TABLE_TITLE, PASSAGES, FOOTERS)
     assert_table(table, TABLE_TITLE, PASSAGES, FOOTERS)
-
-    # synopsis = SynopticTable(TABLE_TITLE, PASSAGES)
-    # synopsis.process_synopsis()
-    # table = synopsis.table
-    # assert table.title == TABLE_TITLE
-    # for index in range(len(PASSAGES)):
-    #     assert table.columns[index].header == PASSAGES[index].title
-    #     assert table.columns[index].footer == PASSAGES[index].footer
-    # assert table.row_count == 1

@@ -7,19 +7,6 @@ from agreement.synoptic_table_model import SynopticTableModel, ParallelTuple
 from agreement.synoptic_table_rich_text import SynopticTableRichText
 import tests.config
 
-# def run_example_old(table_title, passages, report_filename, **kwargs):
-#     synoptic_table = SynopticTable(
-#         table_title, passages,
-#         **kwargs
-#     )
-
-#     synoptic_table.process_synopsis()
-#     table = synoptic_table.table
-#     console = Console(record=True)
-#     console.print(table)
-#     html_path = get_report_path(report_filename)
-#     console.save_html(html_path)
-
 
 def run_example(table_title, passages, report_filename, color_scheme=None):
     synopsis_model = SynopticTableModel(table_title, passages)
