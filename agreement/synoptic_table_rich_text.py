@@ -1,25 +1,20 @@
 import rich
 from rich.table import Table
 from collections import namedtuple
-from typing import List
+from typing import List, Optional
 
 from agreement.agreement import calculate_agreement_types
 from agreement.color_scheme import ColorScheme
 from agreement.greek_text import GreekText
+from agreement.synoptic_table_model import SynopticTableModel, TokenAgreementTuple
 
-Parallel = namedtuple('Parallel', [
-    'title', # Title of a column in an agreement table
-    'text', # Body text for one column in agreement table
-    'footer' # Footer text for column showing count of matching words
-])
+# TokenAgreement = namedtuple('TokenAgreement', [
+#     'pos', # part of speech
+#     'token', # greek word
+#     'agreement_type' # numeric code for agreement type, which is translated to color
+# ])
 
-TokenAgreement = namedtuple('TokenAgreement', [
-    'pos', # part of speech
-    'token', # greek word
-    'agreement_type' # numeric code for agreement type, which is translated to color
-])
-
-class SynopticTable:
+class SynopticTableRichText:
     """
     A synopsis of passages and text.
 
@@ -29,41 +24,73 @@ class SynopticTable:
         table with one column per passage and rows of text and analysis,
         suitable for printing to console or SVG
     """
+    _default_color_scheme=ColorScheme(None, None, None, "yellow")
 
-    def __init__(self, title, parallels: List[Parallel],
-                 color_scheme=ColorScheme(None, None, None, "yellow")):
-        self.parallels = parallels
+    def __init__(self, table_model: SynopticTableModel, color_scheme: Optional[ColorScheme]=None):
+        self._table_model = table_model
+        # self._color_scheme = color_scheme
+        self._color_scheme: Optional[ColorScheme]
+        if (color_scheme == None):
+                self._color_scheme = self._default_color_scheme
+        else:
+                self._color_scheme = color_scheme
+        assert self._color_scheme is not None
+
+        # self.parallels = parallels
+        self._parallels = table_model.parallels
+
         self._table = Table(show_footer=True)
-        self.table.title = title
-        self.color_scheme = color_scheme
-
-
-    def process_synopsis(self):
-        passage_titles = [passage.title for passage in self.parallels]
-        greek_texts = [GreekText(passage.text) for passage in self.parallels]
-        agreement_types = calculate_agreement_types(greek_texts)
-
+        # self.table.title = title
+        self._table.title = table_model.table_title
+        token_agreements = self._table_model.token_agreements
         cells = [
             get_colorized_text_for_tokens(
-                self.color_scheme,
-                [TokenAgreement(*t) for t in zip(
-                    greek_texts[index].pos, # part of speech
-                    greek_texts[index].tokens, # greek word
-                    agreement_type # numeric code for agreement type, which is translated to color
-                )]
+                self._color_scheme,
+                token_agreement_list
             )
-            for index, agreement_type in enumerate(agreement_types)
+            for token_agreement_list in token_agreements
         ]
 
         descriptions = [
-            f"{len(greek_texts[index].clean)} words"
-            for index in range(len(greek_texts))
+            f"{count} words"
+            for count in self._table_model.word_counts
         ]
 
-        for index, passage in enumerate(passage_titles):
-            self.table.add_column(header=passage, footer=descriptions[index])
 
-        self.table.add_row(*cells)
+        for index in range(len(self._table_model.column_headings)):
+            self._table.add_column(
+                header=self._table_model.column_headings[index],
+                footer=descriptions[index]
+            )
+
+        self._table.add_row(*cells)
+
+    # def process_synopsis(self):
+    #     passage_titles = [passage.title for passage in self.parallels]
+    #     agreement_types = calculate_agreement_types(greek_texts)
+    #     greek_texts = [GreekText(passage.text) for passage in self.parallels]
+
+    #     cells = [
+    #         get_colorized_text_for_tokens(
+    #             self._color_scheme,
+    #             [TokenAgreementTuple(*t) for t in zip(
+    #                 greek_texts[index].pos, # part of speech
+    #                 greek_texts[index].tokens, # greek word
+    #                 agreement_type # numeric code for agreement type, which is translated to color
+    #             )]
+    #         )
+    #         for index, agreement_type in enumerate(agreement_types)
+    #     ]
+
+    #     descriptions = [
+    #         f"{len(greek_texts[index].clean)} words"
+    #         for index in range(len(greek_texts))
+    #     ]
+
+    #     for index, passage in enumerate(passage_titles):
+    #         self.table.add_column(header=passage, footer=descriptions[index])
+
+    #     self.table.add_row(*cells)
 
     @property
     def table(self):
@@ -103,7 +130,7 @@ def print_Greek_token(token, pos, previous, scripta_continua=False):
             return " " + token
 
 
-def get_colorized_text_for_tokens(colorScheme: ColorScheme, token_agreement: List[TokenAgreement]) -> str:
+def get_colorized_text_for_tokens(colorScheme: ColorScheme, token_agreement: List[TokenAgreementTuple]) -> str:
     """
     Get a string of text marked up with colors showing agreement type, for a 
     single column of an agreements table.
