@@ -1,11 +1,8 @@
 import rich
 from rich.table import Table
-from collections import namedtuple
 from typing import List, Optional
 
-from agreement.agreement import calculate_agreement_types
 from agreement.color_scheme import ColorScheme
-from agreement.greek_text import GreekText
 from agreement.synoptic_table_model import SynopticTableModel, TokenAgreementTuple
 
 
@@ -49,7 +46,6 @@ class SynopticTableRichText:
             for count in self._table_model.word_counts
         ]
 
-
         for index in range(len(self._table_model.column_headings)):
             self._table.add_column(
                 header=self._table_model.column_headings[index],
@@ -77,26 +73,7 @@ class SynopticTableRichText:
         return self._table
 
 
-def print_Greek_token(token, pos, previous, scripta_continua=False):
-    # https://www.billmounce.com/greekalphabet/greek-punctuation-syllabification
-    # https://blog.greek-language.com/2022/02/14/punctuation-in-ancient-greek-texts-part-i/
-    # https://www.opoudjis.net/unicode/punctuation.html
-    # https://en.wikipedia.org/wiki/Ancient_Greek_grammar#Alphabet
-    if pos == "PUNCT":  # token in "·,;."
-        # https://library.biblicalarchaeology.org/article/punctuationinthenewtestament/
-        # https://en.wikipedia.org/wiki/Scriptio_continua
-        if scripta_continua:
-            return ""
-        else:
-            return token
-    else:
-        if previous is None or previous == "\n" or scripta_continua:
-            return token
-        else:
-            return " " + token
-
-
-def get_colorized_text_for_tokens(colorScheme: ColorScheme, token_agreement: List[TokenAgreementTuple]) -> str:
+def get_colorized_text_for_tokens(colorScheme: ColorScheme, token_agreements: List[TokenAgreementTuple]) -> str:
     """
     Get a string of text marked up with colors showing agreement type, for a 
     single column of an agreements table.
@@ -121,11 +98,8 @@ def get_colorized_text_for_tokens(colorScheme: ColorScheme, token_agreement: Lis
         τοῦ[green][/brown] Θεοῦ[/green],[yellow] καὶ[green][/yellow] τίνι[yellow][/green]
         ὁμοιώσω[brown][/yellow] αὐτήν[/brown];"
     """
-    prev = None
     text = rich.text.Text()
-    for pos, token, agreement_type in token_agreement:
-        to_print = print_Greek_token(token, pos, prev)
+    for pos, token, agreement_type, printable_text in token_agreements:
         style = colorScheme.get_color(agreement_type)
-        text.append(to_print, style=style)
-        prev = token
+        text.append(printable_text, style=style)
     return text.markup

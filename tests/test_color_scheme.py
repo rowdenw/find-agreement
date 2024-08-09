@@ -13,7 +13,19 @@ from tests.config import grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_13_18_19
 def assert_color_scheme(passage: GreekText, agreement_types: List[int], color_scheme: ColorScheme, color_text: str):
     pos = passage.pos
     tokens = passage.tokens
-    token_agreements = [TokenAgreementTuple(*t) for t in zip(pos, tokens, agreement_types)]
+
+    # token_agreements = [TokenAgreementTuple(*t) for t in zip(pos, tokens, agreement_types)]
+    
+    token_agreements = [
+        TokenAgreementTuple(pos, token, agreement_type, printable_token)
+        for pos, token, agreement_type, printable_token in zip(
+            passage.pos,
+            passage.tokens,
+            agreement_types,
+            passage.printable_tokens
+        )
+    ]
+
     row = get_colorized_text_for_tokens(color_scheme, token_agreements)
     assert row == color_text
 
