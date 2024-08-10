@@ -28,8 +28,6 @@ class SynopticTableRichText:
                 self._color_scheme = color_scheme
         assert self._color_scheme is not None
 
-        self._parallels = table_model.parallels
-
         self._table = Table(show_footer=True)
         self._table.title = table_model.table_title
         token_agreements = self._table_model.token_agreements

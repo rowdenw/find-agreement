@@ -1,5 +1,4 @@
-from collections import namedtuple
-from typing import List, NamedTuple, Optional
+from typing import List, NamedTuple
 
 from agreement.agreement import calculate_agreement_types
 from agreement.greek_text import GreekText
@@ -21,32 +20,11 @@ class SynopticTableModel:
     Attributes
     ----------
     """
-    def __init__(self, title: str, parallels: List[ParallelTuple]):
-        self.parallels: List[ParallelTuple] = parallels
-        self._table_title = title
-        self._column_headings: List[str] = [passage.title for passage in self.parallels]
-        self._prepared_texts: List[List[TokenAgreementTuple]]
-        self._word_counts: List[int]
-
-    def process_synopsis(self):
-        processed_greek_texts: List[GreekText] = [GreekText(passage.text) for passage in self.parallels]
-        passage_agreement_types: List[List[int]] = calculate_agreement_types(processed_greek_texts)
-
-        # 
-        self._token_agreements: List[List[TokenAgreementTuple]] = [
-            [
-                TokenAgreementTuple(pos, token, agreement_type, printable_token)
-                for pos, token, agreement_type, printable_token in zip(
-                    gt.pos,
-                    gt.tokens,
-                    passage_agreement_types[col_index],
-                    gt.printable_tokens
-                )
-            ]
-            for col_index, gt in enumerate(processed_greek_texts)
-        ]
-
-        self._word_counts: List[int] = [len(gt.clean) for gt in processed_greek_texts]
+    def __init__(self, table_title: str, column_headings: List[str], token_agreements: List[List[TokenAgreementTuple]], word_counts: List[int]):
+        self._table_title: str = table_title
+        self._column_headings: List[str] = column_headings
+        self._token_agreements: List[List[TokenAgreementTuple]] = token_agreements
+        self._word_counts: List[int] = word_counts
 
     @property
     def table_title(self) -> str:
@@ -64,3 +42,30 @@ class SynopticTableModel:
     def word_counts(self) -> List[int]:
         return self._word_counts
 
+
+def build_synoptic_table(table_title: str, parallels: List[ParallelTuple]):
+    column_headings: List[str] = [passage.title for passage in parallels]
+    
+    processed_greek_texts: List[GreekText] = [GreekText(passage.text) for passage in parallels]
+    passage_agreement_types: List[List[int]] = calculate_agreement_types(processed_greek_texts)
+    token_agreements: List[List[TokenAgreementTuple]] = [
+        [
+            TokenAgreementTuple(pos, token, agreement_type, printable_token)
+            for pos, token, agreement_type, printable_token in zip(
+                gt.pos,
+                gt.tokens,
+                passage_agreement_types[col_index],
+                gt.printable_tokens
+            )
+        ]
+        for col_index, gt in enumerate(processed_greek_texts)
+    ]
+
+    word_counts: List[int] = [len(gt.clean) for gt in processed_greek_texts]
+
+    return SynopticTableModel(
+        table_title,
+        column_headings,
+        token_agreements,
+        word_counts
+    )
