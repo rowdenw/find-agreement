@@ -1,5 +1,6 @@
 import rich
 from rich.table import Table
+from rich.console import Console
 from typing import List, Optional
 
 from agreement.color_scheme import ColorScheme
@@ -20,6 +21,7 @@ class SynopticTableRichText:
 
     def __init__(self, table_model: SynopticTableModel, color_scheme: Optional[ColorScheme]=None):
         self._table_model = table_model
+        self._rich_console = None
 
         self._color_scheme: Optional[ColorScheme]
         if (color_scheme == None):
@@ -52,6 +54,15 @@ class SynopticTableRichText:
 
         self._table.add_row(*cells)
 
+
+    def print_to_console(self):
+        if self._rich_console is None:
+            self._rich_console = Console(record=True)
+        self._rich_console.print(self._table)
+
+
+    # Leaving here for testing, but no longer intended to be used.
+    # Call print_to_console.
     @property
     def table(self):
         """

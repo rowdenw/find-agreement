@@ -1,5 +1,3 @@
-from rich.console import Console
-
 from agreement.bible_api import get_chapter
 from agreement.color_scheme import ColorScheme, GoodacreColorScheme
 from agreement.synoptic_table_model import SynopticTableModel, ParallelTuple, build_synoptic_table
@@ -9,10 +7,12 @@ import tests.config
 
 def run_example(table_title: str, passages, report_filename, color_scheme=None):
     synopsis_model: SynopticTableModel = build_synoptic_table(table_title, passages)
-    table_view = SynopticTableRichText(synopsis_model, color_scheme=color_scheme)
-
-    console = Console(record=True)
-    console.print(table_view.table)
+    
+    rich_table_view = SynopticTableRichText(
+        synopsis_model,
+        color_scheme=color_scheme
+    )
+    rich_table_view.print_to_console()
 
 
 def main():
