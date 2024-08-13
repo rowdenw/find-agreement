@@ -2,6 +2,7 @@ from typing import List, NamedTuple
 
 from agreement.agreement import calculate_agreement_types
 from agreement.greek_text import GreekText
+import json
 
 class ParallelTuple(NamedTuple):
     title: str # Title of a column in an agreement table
@@ -20,11 +21,39 @@ class SynopticTableModel:
     Attributes
     ----------
     """
-    def __init__(self, table_title: str, column_headings: List[str], token_agreements: List[List[TokenAgreementTuple]], word_counts: List[int]):
+    def __init__(self, table_title: str, column_headings: List[str], word_counts: List[int], token_agreements: List[List[TokenAgreementTuple]]):
         self._table_title: str = table_title
         self._column_headings: List[str] = column_headings
-        self._token_agreements: List[List[TokenAgreementTuple]] = token_agreements
         self._word_counts: List[int] = word_counts
+        self._token_agreements: List[List[TokenAgreementTuple]] = token_agreements
+
+    def to_json(self):
+        # Convert the data to a dictionary, explicitly handling TokenAgreementTuple
+        data = {
+            'table_title': self._table_title,
+            'column_headings': self._column_headings,
+            'word_counts': self._word_counts,
+            'token_agreements': [
+                [list(agreement) for agreement in column]
+                for column in self._token_agreements
+            ]
+        }
+        return json.dumps(data, ensure_ascii=False, indent=4)
+
+    @classmethod
+    def from_json(cls, json_str):
+        # Load JSON data and convert lists back into TokenAgreementTuple
+        data = json.loads(json_str)
+        token_agreements = [
+            [TokenAgreementTuple(*token) for token in row]
+            for row in data['token_agreements']
+        ]
+        return cls(
+            data['table_title'],
+            data['column_headings'],
+            data['word_counts'],
+            token_agreements
+        )
 
     @property
     def table_title(self) -> str:
@@ -66,6 +95,6 @@ def build_synoptic_table(table_title: str, parallels: List[ParallelTuple]):
     return SynopticTableModel(
         table_title,
         column_headings,
-        token_agreements,
-        word_counts
+        word_counts,
+        token_agreements
     )
