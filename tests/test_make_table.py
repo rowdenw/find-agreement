@@ -1,9 +1,9 @@
 import tests.config as config
-from agreement.synoptic_table_model import SynopticTableModel, ParallelTuple, build_synoptic_table
+from agreement.synoptic_table_model import SynopticTableModel, ParallelTuple
 from agreement.synoptic_table_rich_text import SynopticTableRichText
 
 def assert_table(table_title, passages, footers, color_scheme=None):
-    synopsis_model: SynopticTableModel = build_synoptic_table(table_title, passages)
+    synopsis_model: SynopticTableModel = SynopticTableModel.build_synoptic_table(table_title, passages)
     rich_synoptic_table = SynopticTableRichText(synopsis_model, color_scheme=color_scheme)
     table = rich_synoptic_table.table
 

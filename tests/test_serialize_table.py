@@ -4,7 +4,7 @@ import pytest
 from pathlib import Path
 
 from agreement.bible_api import get_chapter
-from agreement.synoptic_table_model import SynopticTableModel, ParallelTuple, build_synoptic_table
+from agreement.synoptic_table_model import SynopticTableModel, ParallelTuple
 from tests import config
 
 
@@ -19,9 +19,8 @@ def test_temp_dir() -> Generator[Path, None, None]:
     # Cleanup after the test runs
     shutil.rmtree(temp_dir)
 
-
 def run_test(temp_dir: Path, table_title: str, passages, report_filename, color_scheme=None):
-    synopsis_model: SynopticTableModel = build_synoptic_table(table_title, passages)
+    synopsis_model: SynopticTableModel = SynopticTableModel.build_synoptic_table(table_title, passages)
 
     json_path = temp_dir / f"{table_title}.json"
 
@@ -52,7 +51,6 @@ def test_round_trip_two_column(test_temp_dir: Path):
         ],
         "291-Mark+Matt.svg"
     )
-
 
 def test_round_trip_three_column(test_temp_dir: Path):
     run_test(

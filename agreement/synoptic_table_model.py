@@ -71,30 +71,30 @@ class SynopticTableModel:
     def word_counts(self) -> List[int]:
         return self._word_counts
 
-
-def build_synoptic_table(table_title: str, parallels: List[ParallelTuple]):
-    column_headings: List[str] = [passage.title for passage in parallels]
-    
-    processed_greek_texts: List[GreekText] = [GreekText(passage.text) for passage in parallels]
-    passage_agreement_types: List[List[int]] = calculate_agreement_types(processed_greek_texts)
-    token_agreements: List[List[TokenAgreementTuple]] = [
-        [
-            TokenAgreementTuple(pos, token, agreement_type, printable_token)
-            for pos, token, agreement_type, printable_token in zip(
-                gt.pos,
-                gt.tokens,
-                passage_agreement_types[col_index],
-                gt.printable_tokens
-            )
+    @classmethod
+    def build_synoptic_table(cls, table_title: str, parallels: List[ParallelTuple]) -> "SynopticTableModel":
+        column_headings: List[str] = [passage.title for passage in parallels]
+        
+        processed_greek_texts: List[GreekText] = [GreekText(passage.text) for passage in parallels]
+        passage_agreement_types: List[List[int]] = calculate_agreement_types(processed_greek_texts)
+        token_agreements: List[List[TokenAgreementTuple]] = [
+            [
+                TokenAgreementTuple(pos, token, agreement_type, printable_token)
+                for pos, token, agreement_type, printable_token in zip(
+                    gt.pos,
+                    gt.tokens,
+                    passage_agreement_types[col_index],
+                    gt.printable_tokens
+                )
+            ]
+            for col_index, gt in enumerate(processed_greek_texts)
         ]
-        for col_index, gt in enumerate(processed_greek_texts)
-    ]
 
-    word_counts: List[int] = [len(gt.clean) for gt in processed_greek_texts]
+        word_counts: List[int] = [len(gt.clean) for gt in processed_greek_texts]
 
-    return SynopticTableModel(
-        table_title,
-        column_headings,
-        word_counts,
-        token_agreements
-    )
+        return cls(
+            table_title,
+            column_headings,
+            word_counts,
+            token_agreements
+        )
