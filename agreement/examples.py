@@ -23,7 +23,7 @@ def main():
             ParallelTuple(title="Luke 3:7-9", text=get_chapter("grc-byz1904", "καταλουκαν", 3, 7, 9))
         ],
         "014-Matt+Luke.html",
-        color_scheme = ColorScheme(None, "blue", "yellow", "green")
+        color_scheme = ColorScheme({1: "blue", 2: "yellow", 3: "green"})
 
     )
 
@@ -44,7 +44,7 @@ def main():
             ParallelTuple(title="Luke 13:18-19", text=tests.config.grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_13_18_19)
         ],
         "128-Mark+Matt+Luke.html",
-        color_scheme = ColorScheme(None, None, None, "yellow", None, None, "green")
+        color_scheme = ColorScheme({3: "yellow", 6: "green"})
     )
 
     run_example(
@@ -55,7 +55,7 @@ def main():
             ParallelTuple(title="Luke 13:18-19", text=tests.config.grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_13_18_19)
         ],
         "128-Matt+Mark+Luke.html",
-        color_scheme = GoodacreColorScheme(0, 1, 2, False)
+        color_scheme = GoodacreColorScheme(column_Matthew=0, column_Mark=1, column_Luke=2)
     )
 
     run_example(

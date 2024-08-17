@@ -6,9 +6,30 @@ from agreement.greek_text import GreekText
 from agreement.color_scheme import get_agreement_type
 from agreement.synoptic_table_rich_text import get_colorized_text_for_tokens
 from agreement.synoptic_table_model import TokenAgreementTuple
+from pytest import raises
 from tests import config
 from tests.config import grc_byz1904_ΚΑΤΑ_ΛΟΥΚΑΝ_13_18_19
 
+
+def test_initialization():
+
+    color_scheme = ColorScheme()
+    assert isinstance(color_scheme, ColorScheme)
+
+    color_scheme = ColorScheme({})
+    assert isinstance(color_scheme, ColorScheme)
+
+    with raises(ValueError) as x_info:
+        color_scheme = ColorScheme({0: "yellow"})
+    assert str(x_info.value) == "Keys must be integers between 1 and 7"
+
+    with raises(ValueError) as x_info:
+        color_scheme = ColorScheme({8: "yellow"})
+    assert str(x_info.value) == "Keys must be integers between 1 and 7"
+
+    with raises(ValueError) as x_info:
+        color_scheme = ColorScheme({3: 2})
+    assert str(x_info.value) == "Values must be strings representing colors"
 
 def assert_color_scheme(passage: GreekText, agreement_types: List[int], color_scheme: ColorScheme, color_text: str):
     pos = passage.pos
@@ -41,7 +62,7 @@ def test_agreement_type():
 
 
 def test_color_scheme():
-    colorScheme = ColorScheme(None, None, None, "yellow")
+    colorScheme = ColorScheme({3: "yellow"})
     assert colorScheme.get_color(3) == "yellow"
     colorScheme.set_color(get_agreement_type([1, 2]), "green")
     assert colorScheme.get_color(6) == "green"
@@ -92,8 +113,8 @@ def test_color_Mark_4_30_32():
 [/black on white] Θεοῦ;[blue] ἢ[purple][/blue] ἐν[/purple] τίνι[blue] παραβολῇ\
 [blue][/blue] παραβάλωμεν[black on white][/blue] αὐτήν[/black on white];"
     # http://www.hypotyposeis.org/synoptic-problem/2004/10/johns-imprisonment.html
-    colorScheme = ColorScheme(None, "blue", "red", "purple",
-                              "green", None, None, "black on white")
+    colorScheme = ColorScheme({1: "blue", 2: "red", 3: "purple",
+                              4: "green", 7: "black on white"})
     passage = GreekText(config.grc_byz1904_ΚΑΤΑ_ΜΑΡΚΟΝ_4_30)
 
     assert_color_scheme(passage, agreement_type_Mark_4_30_32, colorScheme, color_text)

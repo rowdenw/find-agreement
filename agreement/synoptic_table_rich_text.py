@@ -17,7 +17,7 @@ class SynopticTableRichText:
         table with one column per passage and rows of text and analysis,
         suitable for printing to console or SVG
     """
-    _default_color_scheme=ColorScheme(None, None, None, "yellow")
+    _default_color_scheme=ColorScheme({3: "yellow"})
 
     def __init__(self, table_model: SynopticTableModel, color_scheme: Optional[ColorScheme]=None):
         self._table_model = table_model
