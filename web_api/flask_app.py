@@ -46,5 +46,5 @@ def get_synopsis(table_name=None):
         table_name = request.json['table_name']
 
     model_data: SynopticTableModel = load_synopsis_data(table_name)
-    response_data = json.dumps(model_data, indent=4)
+    response_data = json.dumps(model_data, indent=4, ensure_ascii=False)
     return Response(response_data, mimetype='application/json'), 200
